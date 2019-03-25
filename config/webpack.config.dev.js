@@ -2,11 +2,14 @@ const path = require('path');
 const {
   CheckerPlugin
 } = require('awesome-typescript-loader');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const ROOT = path.resolve(__dirname);
 const BUILD_PATH = path.resolve(__dirname, "/build");
 
 module.exports = {
+  mode: "development",
   entry: path.resolve(__dirname, "./../src/index.tsx"),
   devtool: 'source-map',
   output: {
@@ -26,29 +29,33 @@ module.exports = {
         loader: "source-map-loader"
       },
       {
-        test: /\.less$/,
-        include: ROOT + '/src',
-        use: [{
-            loader: 'style-loader'
-          },
-          {
-            loader: 'css-loader'
-          },
-          {
-            loader: 'less-loader'
-          }
-        ]
-      },
-      {
-        test: /\.png/,
+        test: /\.css$/,
         use: [
           {
-            loader: 'url-loader',
+            loader: "css-hot-loader",
+          },
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
+          {
+            loader: require.resolve("css-loader"),
             options: {
-              limit: 1024 * 20
-            }
+              importLoaders: 1,
+              sourceMap: true,
+              localIdentName: "[local]",
+            },
+          },
+        ],
+      },
+
+      {
+        test: /\.png/,
+        use: [{
+          loader: 'url-loader',
+          options: {
+            limit: 1024 * 20
           }
-        ]
+        }]
       }
     ]
   },
@@ -60,5 +67,13 @@ module.exports = {
   },
   plugins: [
     new CheckerPlugin(),
+    new MiniCssExtractPlugin({
+			filename: "[name].css",
+			chunkFilename: "[id].css",
+    }),
+    new HtmlWebpackPlugin({
+      title: "react-typescript-starter",
+      template: path.resolve(__dirname, "./../src/template.html"),
+    }),
   ]
 }
