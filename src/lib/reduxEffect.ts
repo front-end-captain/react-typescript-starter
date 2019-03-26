@@ -5,8 +5,8 @@ interface State {
 }
 
 interface Action<T = string> {
-  type: T,
-  [key: string]: any,
+  type: T;
+  [key: string]: any;
 }
 
 export interface Modal {
@@ -19,7 +19,6 @@ export interface Modal {
     [key: string]: (store: Store, action?: Action) => void;
   };
 }
-
 interface Reducers {
   [key: string]: (state: State, action: Action) => State | {};
 }
@@ -53,7 +52,7 @@ const reduxEffects = (modals: Modal[]) => (store: Store) => (next: Dispatch) => 
   }
 
   const currentModal: Modal = modals.find((modal: Modal) => modal.namespace === key);
-  if (currentModal && Object.keys(currentModal.effects).length > 0 && typeof currentModal.effects === "function") {
+  if (currentModal && currentModal.effects && typeof currentModal.effects[type] === "function") {
     await currentModal.effects[type](store, action);
   }
 };
@@ -69,7 +68,7 @@ const reduxEffectsWithLoading = (modals: Modal[]) => (store: Store) => (next: Di
   }
 
   const currentModal: Modal = modals.find((modal: Modal) => modal.namespace === key);
-  if (currentModal && currentModal.effects && typeof currentModal.effects === "function") {
+  if (currentModal && currentModal.effects && typeof currentModal.effects[type] === "function") {
     await store.dispatch({ type: "loading/save", payload: { [action.type]: true } });
     await currentModal.effects[type](store, action);
     await store.dispatch({ type: "loading/save", payload: { [action.type]: false } });

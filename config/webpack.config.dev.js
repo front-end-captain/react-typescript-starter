@@ -1,21 +1,22 @@
 const path = require('path');
-const {
-  CheckerPlugin
-} = require('awesome-typescript-loader');
+const webpack = require("webpack");
+const { CheckerPlugin } = require('awesome-typescript-loader');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const ROOT = path.resolve(__dirname);
 const BUILD_PATH = path.resolve(__dirname, "/build");
+const ASSETS_PATH = path.resolve("/assets/");
 
 module.exports = {
   mode: "development",
   entry: path.resolve(__dirname, "./../src/index.tsx"),
-  devtool: 'source-map',
+  devtool: "cheap-module-source-map",
   output: {
     path: BUILD_PATH,
     filename: '[name].js',
-    sourceMapFilename: '[name].map.js'
+    sourceMapFilename: '[name].map.js',
+    publicPath: ASSETS_PATH,
   },
   module: {
     rules: [
@@ -59,6 +60,20 @@ module.exports = {
       }
     ]
   },
+  devServer: {
+    open: false,
+    host: "0.0.0.0",
+    port: "8080",
+    contentBase: BUILD_PATH,
+    hot: true,
+    overlay: {
+      errors: true,
+    },
+    publicPath: ASSETS_PATH,
+    historyApiFallback: {
+      index: ASSETS_PATH + "index.html",
+    },
+  },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".json", ".png"],
     alias: {
@@ -68,12 +83,14 @@ module.exports = {
   plugins: [
     new CheckerPlugin(),
     new MiniCssExtractPlugin({
-			filename: "[name].css",
-			chunkFilename: "[id].css",
+      filename: "[name].css",
+      chunkFilename: "[id].css",
     }),
     new HtmlWebpackPlugin({
       title: "react-typescript-starter",
       template: path.resolve(__dirname, "./../src/template.html"),
     }),
+    new webpack.NamedModulesPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
   ]
 }
