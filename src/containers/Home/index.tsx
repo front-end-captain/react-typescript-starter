@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect, DispatchProp } from "react-redux";
 // import { RouteComponentProps } from "react-router-dom";
 
-import { GlobalState } from "./../../modal/global/index";
+import { IState } from "./../../modal/index";
 
 interface HomeProps extends DispatchProp {
   title: string;
@@ -21,7 +21,7 @@ const Home = (props: HomeProps) => {
   );
 };
 
-const mapStateToProps = ({ home }: GlobalState) => {
+const mapStateToProps = ({ home }: IState) => {
   return { home };
 };
 

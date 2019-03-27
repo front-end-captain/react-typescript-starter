@@ -15,8 +15,8 @@ const App: React.SFC = () => {
         <NavLink to="/about">About</NavLink>
       </div>
 
-      <Route path="/" component={Home} />
-      <Route path="/about" component={About} />
+      <Route path="/" exact component={Home} />
+      <Route path="/about" exact component={About} />
     </Router>
   );
 }

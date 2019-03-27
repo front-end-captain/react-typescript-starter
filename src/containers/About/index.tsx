@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect, DispatchProp } from "react-redux";
 
-import { GlobalState } from "./../../modal/global/index";
+import { IState } from "./../../modal/index";
 
 interface AboutProps extends DispatchProp {
   title: string;
@@ -29,7 +29,7 @@ const About = (props: AboutProps) => {
   );
 };
 
-const mapStateToProps = ({ about }: GlobalState) => {
+const mapStateToProps = ({ about }: IState) => {
   return { number: about.number };
 };
 

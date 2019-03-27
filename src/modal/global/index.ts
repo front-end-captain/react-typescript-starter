@@ -1,9 +1,12 @@
-import { HomeState } from "./../Home/index";
-import { AboutState } from "./../About/index";
+import { Modal } from "./../../lib/reduxEffect";
 
-interface GlobalState {
-  home: typeof HomeState;
-  about: typeof AboutState;
+export const GlobalState = {
+  login: false,
 }
 
-export { GlobalState }
+const Global: Modal = {
+  namespace: "global",
+  state: GlobalState,
+}
+
+export default Global;
