@@ -1,11 +1,22 @@
 import React, { MouseEvent, SFC } from "react";
+import { withDefaultProps } from "./../../lib/helps";
 
-export interface ButtonProps {
+const defaultProps = {
+  color: "red",
+};
+
+type DefaultProps = typeof defaultProps;
+
+type Props = {
   onClick?: (event: MouseEvent<HTMLElement>) => void;
-}
+} & DefaultProps;
 
-const Button: SFC<ButtonProps> = ({ onClick: handleClick, children }) => {
-  return <button onClick={handleClick}>{children}</button>;
-}
+const Button: SFC<Props> = ({ onClick: handleClick, children, color }) => {
+  return (
+    <button style={{ color }} onClick={handleClick}>
+      {children}
+    </button>
+  );
+};
 
-export default Button;
+export default withDefaultProps<Props>(defaultProps, Button);

@@ -1,11 +1,16 @@
 import * as React from "react";
 import { BrowserRouter as Router, NavLink, Route } from "react-router-dom";
-import { hot } from "react-hot-loader";
+import { hot, setConfig } from "react-hot-loader";
 
 import Home from "./containers/Home";
 import About from "./containers/About";
 
 import "./App.css";
+
+setConfig({
+  ignoreSFC: true,
+  pureRender: true,
+});
 
 const App: React.SFC = () => {
   return (
