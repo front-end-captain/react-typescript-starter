@@ -1,5 +1,5 @@
 import * as React from "react";
-import { connect, DispatchProp } from "react-redux";
+import { connect, DispatchProp, MapStateToProps} from "react-redux";
 // import { RouteComponentProps } from "react-router-dom";
 
 import ButtonCounter from "./../../components/ButtonCounter/index";
@@ -9,12 +9,13 @@ import { IState } from "./../../modal/index";
 import Button from "../../components/Button";
 import Menu from "../../components/Menu";
 
-interface HomeProps extends DispatchProp {
+type HomeProps = {
   title: string;
-}
+  fetching: boolean | null;
+} & DispatchProp & IState;
 
 const Home = (props: HomeProps) => {
-  const { dispatch } = props;
+  const { dispatch, home, fetching } = props;
   const fetch = () => {
     dispatch({ type: "home/fetch" });
   };
@@ -22,6 +23,8 @@ const Home = (props: HomeProps) => {
   return (
     <div>
       <button onClick={fetch}>fetch</button>
+      <span style={{ color: "red" }}>{home.text}</span>
+      <span style={{ color: "orange" }}>{fetching ? "loading" : null}</span>
       <ButtonCounter />
       <Toggle>
         {({ show, toggle }) => {
@@ -50,8 +53,8 @@ const Home = (props: HomeProps) => {
   );
 };
 
-const mapStateToProps = ({ home }: IState) => {
-  return { home };
+const mapStateToProps = ({ home, loading }: IState) => {
+  return { home, fetching: loading.effects.home.fetch };
 };
 
 export default connect(mapStateToProps)(Home);

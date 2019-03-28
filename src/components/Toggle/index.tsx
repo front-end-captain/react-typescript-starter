@@ -14,7 +14,7 @@ type Props = Partial<{
   render: RenderCallback;
 }>;
 
-type RenderCallback = (callbackargs: callbackArgs) => JSX.Element;
+type RenderCallback = (args: callbackArgs) => JSX.Element;
 type callbackArgs = { show: State["show"]; toggle: Toggle["toggle"] };
 
 const updateShowState = (prevState: State) => ({ show: !prevState.show });
