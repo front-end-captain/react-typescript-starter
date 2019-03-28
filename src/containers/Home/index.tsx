@@ -1,6 +1,6 @@
 import * as React from "react";
-import { connect, DispatchProp, MapStateToProps} from "react-redux";
-// import { RouteComponentProps } from "react-router-dom";
+import { connect, DispatchProp } from "react-redux";
+import { RouteComponentProps } from "react-router-dom";
 
 import ButtonCounter from "./../../components/ButtonCounter/index";
 import Toggle from "./../../components/Toggle/index";
@@ -11,11 +11,12 @@ import Menu from "../../components/Menu";
 
 type HomeProps = {
   title: string;
-  fetching: boolean | null;
-} & DispatchProp & IState;
+} & DispatchProp & IState & RouteComponentProps;
 
 const Home = (props: HomeProps) => {
-  const { dispatch, home, fetching } = props;
+  const { dispatch, home, loading } = props;
+  const { home: { fetch: fetching } } = loading;
+
   const fetch = () => {
     dispatch({ type: "home/fetch" });
   };
@@ -54,7 +55,7 @@ const Home = (props: HomeProps) => {
 };
 
 const mapStateToProps = ({ home, loading }: IState) => {
-  return { home, fetching: loading.effects.home.fetch };
+  return { home, loading };
 };
 
 export default connect(mapStateToProps)(Home);

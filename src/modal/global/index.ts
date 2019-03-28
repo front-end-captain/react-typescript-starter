@@ -1,14 +1,18 @@
 import { Modal, Effects } from "./../../lib/reduxEffect";
 import { HomeEffects, homeEffects } from "./../Home/index";
 
+interface LoadingMap {
+  [key: string]: null | boolean;
+}
+
 // REVIEW
-const createEffectsMap = (homeEffects: Effects) => {
-  const homeLoading = {};
-  Object.entries(homeEffects).forEach((item) => {
-    homeLoading[item[0]] = null;
+const createEffectsMap = (effects: Effects) => {
+  const loadingMap: LoadingMap = {};
+  Object.entries(effects).forEach((item) => {
+    loadingMap[item[0]] = null;
   });
 
-  return homeLoading;
+  return loadingMap;
 };
 
 export const GlobalState = {
@@ -17,22 +21,18 @@ export const GlobalState = {
 
 // REVIEW
 export interface LoadingState {
-  effects: {
-    home: HomeEffects;
-  };
+  home: HomeEffects;
 }
 
 export const Loading: Modal = {
   namespace: "loading",
   state: {
-    effects: {
-      home: createEffectsMap(homeEffects),
-    },
+    home: createEffectsMap(homeEffects),
   },
   reducers: {
     loading: (state, { payload: { name, type, loading } }) => ({
       ...state,
-      effects: { [name]: { [type]: loading } },
+      [name]: { [type]: loading },
     }),
   },
 };
