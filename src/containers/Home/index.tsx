@@ -9,6 +9,8 @@ import { IState } from "./../../modal/index";
 import Button from "../../components/Button";
 import Menu from "../../components/Menu";
 
+import { HomeWrapper } from "./index.css";
+
 type HomeProps = {
   title: string;
 } & DispatchProp & IState & RouteComponentProps;
@@ -22,7 +24,7 @@ const Home = (props: HomeProps) => {
   };
 
   return (
-    <div>
+    <HomeWrapper>
       <button onClick={fetch}>fetch</button>
       <span style={{ color: "red" }}>{home.text}</span>
       <span style={{ color: "orange" }}>{fetching ? "loading" : null}</span>
@@ -50,7 +52,7 @@ const Home = (props: HomeProps) => {
         }}
       />
       <Menu />
-    </div>
+    </HomeWrapper>
   );
 };
 

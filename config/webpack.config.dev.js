@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const ROOT = path.resolve(__dirname);
 const BUILD_PATH = path.resolve(__dirname, "/build");
-const ASSETS_PATH = path.resolve("/assets/");
+const ASSETS_PATH = "/assets/";
 
 module.exports = {
   mode: "development",
@@ -22,12 +22,20 @@ module.exports = {
     rules: [
       {
         test: /\.ts[x]?$/,
-        loader: "awesome-typescript-loader"
+        loader: "awesome-typescript-loader",
+        options: {
+          errorsAsWarnings: false,
+        },
       },
       {
         enforce: "pre",
         test: /\.ts[x]$/,
         loader: "source-map-loader"
+      },
+      {
+        test: /\.css.ts$/,
+        loader: require.resolve("stylelint-custom-processor-loader"),
+        exclude: /node_modules/,
       },
       {
         test: /\.css$/,
