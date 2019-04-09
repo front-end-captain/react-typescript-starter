@@ -10,13 +10,13 @@ import Global, { GlobalState, LoadingState, Loading } from "./../modal/global/in
 
 const modals: Modal[] = [Home, About, Global, Loading];
 const reducers = combineReducers(reduxReducers(modals));
-const middlewares: Middleware[] = [reduxEffectsWithLoading(modals)];
-const enhanceMiddleware = (middlewares: Middleware[]) => {
+const middlewareList: Middleware[] = [reduxEffectsWithLoading(modals)];
+const enhanceMiddleware = (middlewareList: Middleware[]) => {
   if (process.env.NODE_ENV === "development") {
-    return composeWithDevTools(applyMiddleware(...middlewares));
+    return composeWithDevTools(applyMiddleware(...middlewareList));
   }
 
-  return applyMiddleware(...middlewares);
+  return applyMiddleware(...middlewareList);
 };
 
 
@@ -28,5 +28,5 @@ export interface IState {
 }
 
 export default function configureStore(initialState?: any): Store {
-  return createStore(reducers, initialState, enhanceMiddleware(middlewares));
+  return createStore(reducers, initialState, enhanceMiddleware(middlewareList));
 }

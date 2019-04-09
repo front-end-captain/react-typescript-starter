@@ -34,7 +34,7 @@ class Toggle extends Component<Props, State> {
     }
 
     if (isFunction(children)) {
-      return children(renderProps);
+      return (children as Function)(renderProps);
     }
 
     return null;
