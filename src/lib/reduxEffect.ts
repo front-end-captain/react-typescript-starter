@@ -1,32 +1,15 @@
-import { Store, Reducer, Dispatch, ReducersMapObject, MiddlewareAPI } from "redux";
+import { Dispatch, ReducersMapObject, MiddlewareAPI, AnyAction, Store } from "redux";
+import { State, Modal } from "./types";
 
-interface State {
-  [key: string]: any;
-}
-
-interface Action<T = string> {
-  type: T;
-  [key: string]: any;
-}
-
-export interface Effects {
-  [key: string]: (store: Store, action?: Action) => void;
-}
-
-export interface Modal {
-  namespace: string;
-  state: State;
-  reducers?: {
-    [key: string]: Reducer<State>;
-  };
-  effects?: Effects;
-}
-
+/**
+ *
+ * @param modals
+ */
 const reduxReducers = function reduxReducers(modals: Modal[]): ReducersMapObject {
   const reducers: ReducersMapObject = {};
 
   modals.map((modal: Modal) => {
-    reducers[modal.namespace] = (state: State, action: Action) => {
+    reducers[modal.namespace] = (state: State, action: AnyAction) => {
       const [key, type] = action.type.split("/");
 
       if (
@@ -46,8 +29,12 @@ const reduxReducers = function reduxReducers(modals: Modal[]): ReducersMapObject
   return reducers;
 };
 
+/**
+ *
+ * @param modals
+ */
 const reduxEffects = (modals: Modal[]) => (store: MiddlewareAPI) => (next: Dispatch) => async (
-  action: Action,
+  action: AnyAction,
 ) => {
   next(action);
   const [key, type] = action.type.split("/");
@@ -58,13 +45,17 @@ const reduxEffects = (modals: Modal[]) => (store: MiddlewareAPI) => (next: Dispa
 
   const currentModal: Modal = modals.find((modal: Modal) => modal.namespace === key) || modals[0];
   if (currentModal && currentModal.effects && typeof currentModal.effects[type] === "function") {
-    await currentModal.effects[type](store.getState(), action);
+    await currentModal.effects[type](store as Store, action);
   }
 };
 
+/**
+ *
+ * @param modals
+ */
 const reduxEffectsWithLoading = (modals: Modal[]) => (store: MiddlewareAPI) => (
   next: Dispatch,
-) => async (action: Action) => {
+) => async (action: AnyAction) => {
   next(action);
   const [key, type] = action.type.split("/");
 
@@ -75,7 +66,7 @@ const reduxEffectsWithLoading = (modals: Modal[]) => (store: MiddlewareAPI) => (
   const currentModal: Modal = modals.find((modal: Modal) => modal.namespace === key) || modals[0];
   if (currentModal && currentModal.effects && typeof currentModal.effects[type] === "function") {
     await store.dispatch({ type: `loading/loading`, payload: { name: key, type, loading: true } });
-    await currentModal.effects[type](store.getState(), action);
+    await currentModal.effects[type](store as Store, action);
     await store.dispatch({ type: `loading/loading`, payload: { name: key, type, loading: false } });
   }
 };

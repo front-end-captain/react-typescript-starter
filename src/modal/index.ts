@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware, combineReducers, Middleware, Store } from "redux";
-import { reduxReducers, Modal, reduxEffectsWithLoading } from "./../lib/reduxEffect";
+import { reduxReducers, reduxEffectsWithLoading } from "./../lib/reduxEffect";
+import { Modal } from "./../lib/types";
 
 import { composeWithDevTools } from "redux-devtools-extension";
 

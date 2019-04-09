@@ -1,7 +1,8 @@
-import { Modal, Effects } from "./../../lib/reduxEffect";
+import { Modal, Effects } from "./../../lib/types";
 import { HomeEffects, homeEffects } from "./../Home/index";
+import { type } from "os";
 
-interface LoadingMap {
+type LoadingMap = {
   [key: string]: null | boolean;
 }
 
@@ -13,10 +14,6 @@ const createEffectsMap = (effects: Effects) => {
   });
 
   return loadingMap;
-};
-
-export const GlobalState = {
-  login: false,
 };
 
 // REVIEW
@@ -35,6 +32,11 @@ export const Loading: Modal = {
       [name]: { [type]: loading },
     }),
   },
+};
+
+
+export const GlobalState = {
+  login: false,
 };
 
 const Global: Modal = {

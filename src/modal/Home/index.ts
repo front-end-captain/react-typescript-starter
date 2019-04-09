@@ -1,4 +1,5 @@
-import { Modal, Effects} from "./../../lib/reduxEffect";
+import { Modal, Effects } from "./../../lib/types";
+import { Store } from "redux";
 import { sleep } from "./../../lib/helps";
 
 export const HomeState = {
@@ -8,7 +9,7 @@ export const HomeState = {
 export type HomeEffects = typeof homeEffects & Effects;
 
 export const homeEffects = {
-  fetch: async ({ dispatch }) => {
+  fetch: async ({ dispatch }: Store) => {
     dispatch({
       type: "home/save",
       payload: { text: "you click the button, updated after 3 seconds, please check dev tools" },

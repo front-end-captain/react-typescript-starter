@@ -13,11 +13,11 @@ import { HomeWrapper } from "./index.css";
 
 type HomeProps = {
   title: string;
+  fetching: boolean | null;
 } & DispatchProp & IState & RouteComponentProps;
 
 const Home = (props: HomeProps) => {
-  const { dispatch, home, loading } = props;
-  const { home: { fetch: fetching } } = loading;
+  const { dispatch, home, fetching } = props;
 
   const fetch = () => {
     dispatch({ type: "home/fetch" });
@@ -56,8 +56,9 @@ const Home = (props: HomeProps) => {
   );
 };
 
-const mapStateToProps = ({ home, loading }: IState) => {
-  return { home, loading };
+
+const mapStateToProps = ({ home, loading }: IState, ownProps: HomeProps) => {
+  return { home, fetching: loading.home.fetch, ...ownProps };
 };
 
 export default connect(mapStateToProps)(Home);

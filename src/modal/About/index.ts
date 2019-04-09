@@ -1,4 +1,4 @@
-import { Modal } from "./../../lib/reduxEffect";
+import { Modal } from "./../../lib/types";
 
 export const AboutState = {
   number: 0,
