@@ -25,7 +25,7 @@ export interface IState {
   readonly home: typeof HomeState;
   readonly about: typeof AboutState;
   readonly global: typeof GlobalState;
-  readonly loading: LoadingState;
+  readonly loading: typeof LoadingState;
 }
 
 export default function configureStore(initialState?: any): Store {

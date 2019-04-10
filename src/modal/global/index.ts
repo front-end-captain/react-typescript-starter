@@ -1,31 +1,14 @@
-import { Modal, Effects } from "./../../lib/types";
-import { HomeEffects, homeEffects } from "./../Home/index";
-import { type } from "os";
+import { Modal } from "./../../lib/types";
+import { homeEffects } from "./../Home/index";
+import { createEffectsMap } from "./../../lib/helps";
 
-type LoadingMap = {
-  [key: string]: null | boolean;
-}
-
-// REVIEW
-const createEffectsMap = (effects: Effects) => {
-  const loadingMap: LoadingMap = {};
-  Object.entries(effects).forEach((item) => {
-    loadingMap[item[0]] = null;
-  });
-
-  return loadingMap;
+export const LoadingState = {
+  home: createEffectsMap(homeEffects),
 };
-
-// REVIEW
-export interface LoadingState {
-  home: HomeEffects;
-}
 
 export const Loading: Modal = {
   namespace: "loading",
-  state: {
-    home: createEffectsMap(homeEffects),
-  },
+  state: LoadingState,
   reducers: {
     loading: (state, { payload: { name, type, loading } }) => ({
       ...state,

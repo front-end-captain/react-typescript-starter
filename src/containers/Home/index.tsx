@@ -8,8 +8,11 @@ import Toggle from "./../../components/Toggle/index";
 import { IState } from "./../../modal/index";
 import Button from "../../components/Button";
 import Menu from "../../components/Menu";
+import Collapse from "./../../components/Hooks/collapse";
 
 import { HomeWrapper } from "./index.css";
+
+const { Panel } = Collapse;
 
 type HomeProps = {
   title: string;
@@ -52,6 +55,11 @@ const Home = (props: HomeProps) => {
         }}
       />
       <Menu />
+      <Collapse>
+        <Panel title="one">content one</Panel>
+        <Panel title="two">content two</Panel>
+        <Panel title="three">content three</Panel>
+      </Collapse>
     </HomeWrapper>
   );
 };
@@ -61,4 +69,5 @@ const mapStateToProps = ({ home, loading }: IState, ownProps: HomeProps) => {
   return { home, fetching: loading.home.fetch, ...ownProps };
 };
 
+// 如果省略了 connect 方法的第二个参数(mapDispatchToProps) 默认情况下 dispatch 方法会注入到组件的 props 中
 export default connect(mapStateToProps)(Home);
