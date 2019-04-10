@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { connect, DispatchProp } from "react-redux";
 import { RouteComponentProps } from "react-router-dom";
 
@@ -10,9 +10,21 @@ import Button from "../../components/Button";
 import Menu from "../../components/Menu";
 import Collapse from "./../../components/Hooks/collapse";
 
+import { useEventListener } from "./../../components/Hooks/useEventListener";
+import { whyDidYouUpdate } from "./../../components/Hooks/useWhyDidYouUpdate";
+
 import { HomeWrapper } from "./index.css";
 
 const { Panel } = Collapse;
+
+interface ICounter {
+  count: number;
+  style?: React.CSSProperties;
+}
+const Counter = React.memo((props: ICounter) => {
+  whyDidYouUpdate("Counter", props);
+  return <div style={props.style}>{props.count}</div>;
+});
 
 type HomeProps = {
   title: string;
@@ -20,14 +32,26 @@ type HomeProps = {
 } & DispatchProp & IState & RouteComponentProps;
 
 const Home = (props: HomeProps) => {
+  const [coords, setCoords] = useState([0, 0]);
+  const [count, setCount] = useState(0);
   const { dispatch, home, fetching } = props;
 
   const fetch = () => {
     dispatch({ type: "home/fetch" });
   };
 
+  useEventListener("mousemove", (event: Event) => {
+    const { clientX, clientY } = event as MouseEvent;
+    setCoords([clientX, clientY]);
+  });
+
+  const [x, y] = coords;
+
   return (
     <HomeWrapper>
+      <Counter count={count} />
+      <button onClick={() => setCount(count + 1)} type="button">Increment</button>
+      <p>the mouse position is {x} {y}</p>
       <button onClick={fetch}>fetch</button>
       <span style={{ color: "red" }}>{home.text}</span>
       <span style={{ color: "orange" }}>{fetching ? "loading" : null}</span>
