@@ -18,6 +18,8 @@ const useToggle = () => {
 const Panel: FunctionComponent<Props> = ({ title, children }) => {
   const { active, handleToggle } = useToggle();
 
+  console.log(active);
+
   const contentClassNames = classNames("panel-content", {
     "panel-content-inactive": !active,
   });

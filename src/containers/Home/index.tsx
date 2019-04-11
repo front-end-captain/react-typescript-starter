@@ -9,8 +9,9 @@ import { IState } from "./../../modal/index";
 import Button from "../../components/Button";
 import Menu from "../../components/Menu";
 import Collapse from "./../../components/Hooks/collapse";
+import { SquaresToDraw } from "./../../components/SquaresToDraw/index";
+import { Position } from "./../../components/Position/index";
 
-import { useEventListener } from "./../../components/Hooks/useEventListener";
 import { whyDidYouUpdate } from "./../../components/Hooks/useWhyDidYouUpdate";
 
 import { HomeWrapper } from "./index.css";
@@ -32,7 +33,7 @@ type HomeProps = {
 } & DispatchProp & IState & RouteComponentProps;
 
 const Home = (props: HomeProps) => {
-  const [coords, setCoords] = useState([0, 0]);
+  // REVIEW 此处应该将 count 状态进行单独封装
   const [count, setCount] = useState(0);
   const { dispatch, home, fetching } = props;
 
@@ -40,18 +41,11 @@ const Home = (props: HomeProps) => {
     dispatch({ type: "home/fetch" });
   };
 
-  useEventListener("mousemove", (event: Event) => {
-    const { clientX, clientY } = event as MouseEvent;
-    setCoords([clientX, clientY]);
-  });
-
-  const [x, y] = coords;
-
   return (
     <HomeWrapper>
       <Counter count={count} />
       <button onClick={() => setCount(count + 1)} type="button">Increment</button>
-      <p>the mouse position is {x} {y}</p>
+      <Position />
       <button onClick={fetch}>fetch</button>
       <span style={{ color: "red" }}>{home.text}</span>
       <span style={{ color: "orange" }}>{fetching ? "loading" : null}</span>
@@ -84,6 +78,7 @@ const Home = (props: HomeProps) => {
         <Panel title="two">content two</Panel>
         <Panel title="three">content three</Panel>
       </Collapse>
+      <SquaresToDraw />
     </HomeWrapper>
   );
 };
