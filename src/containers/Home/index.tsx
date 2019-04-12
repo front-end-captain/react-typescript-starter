@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { connect, DispatchProp } from "react-redux";
 import { RouteComponentProps } from "react-router-dom";
 
-import ButtonCounter from "./../../components/ButtonCounter/index";
-import Toggle from "./../../components/Toggle/index";
+// import ButtonCounter from "./../../components/ButtonCounter/index";
+// import Toggle from "./../../components/Toggle/index";
 
 import { IState } from "./../../modal/index";
-import Button from "../../components/Button";
-import Menu from "../../components/Menu";
+// import Button from "../../components/Button";
+// import Menu from "../../components/Menu";
 import Collapse from "./../../components/Hooks/collapse";
 import { SquaresToDraw } from "./../../components/SquaresToDraw/index";
 import { Position } from "./../../components/Position/index";
@@ -23,7 +23,7 @@ interface ICounter {
   style?: React.CSSProperties;
 }
 const Counter = React.memo((props: ICounter) => {
-  whyDidYouUpdate("Counter", props);
+  // whyDidYouUpdate("Counter", props);
   return <div style={props.style}>{props.count}</div>;
 });
 
@@ -32,8 +32,10 @@ type HomeProps = {
   fetching: boolean | null;
 } & DispatchProp & IState & RouteComponentProps;
 
+
+
 const Home = (props: HomeProps) => {
-  // REVIEW 此处应该将 count 状态进行单独封装
+  // REVIEW 此处应该将 count 状态进行单独封装 不然会造成子组件的不必要的渲染
   const [count, setCount] = useState(0);
   const { dispatch, home, fetching } = props;
 
@@ -45,39 +47,19 @@ const Home = (props: HomeProps) => {
     <HomeWrapper>
       <Counter count={count} />
       <button onClick={() => setCount(count + 1)} type="button">Increment</button>
+
       <Position />
+
       <button onClick={fetch}>fetch</button>
       <span style={{ color: "red" }}>{home.text}</span>
       <span style={{ color: "orange" }}>{fetching ? "loading" : null}</span>
-      <ButtonCounter />
-      <Toggle>
-        {({ show, toggle }) => {
-          return (
-            <>
-              <div onClick={toggle}>
-                <h1>Title</h1>
-              </div>
-              {show ? <span>some content</span> : null}
-            </>
-          );
-        }}
-      </Toggle>
-      <Toggle
-        render={({ show, toggle }) => {
-          return (
-            <>
-              <Button onClick={toggle}>{show ? "Hide" : "Show"}</Button>
-              {show ? <span>some content</span> : null}
-            </>
-          );
-        }}
-      />
-      <Menu />
+
       <Collapse>
         <Panel title="one">content one</Panel>
         <Panel title="two">content two</Panel>
         <Panel title="three">content three</Panel>
       </Collapse>
+
       <SquaresToDraw />
     </HomeWrapper>
   );

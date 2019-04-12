@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, ReactElement } from "react";
+import React, { FunctionComponent, useState, ReactElement, memo } from "react";
 
 import classNames from "classnames";
 
@@ -15,7 +15,8 @@ const useToggle = () => {
   return { active, handleToggle };
 };
 
-const Panel: FunctionComponent<Props> = ({ title, children }) => {
+// TODO 使用 memo 包裹组件 避免重复渲染
+const Panel: FunctionComponent<Props> = memo(({ title, children }) => {
   const { active, handleToggle } = useToggle();
 
   console.log(active);
@@ -32,7 +33,7 @@ const Panel: FunctionComponent<Props> = ({ title, children }) => {
       <div className={contentClassNames}>{children}</div>
     </PanelWrapper>
   );
-};
+});
 
 type TCollapse = {
   Panel: typeof Panel;
