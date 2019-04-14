@@ -6,7 +6,7 @@ import { IState } from "@/modal";
 import Collapse from "./../../components/Hooks/collapse";
 import { SquaresToDraw } from "@/components/SquaresToDraw";
 import { Position } from "@/components/Position";
-import { ButtonCounter } from "@/components/ButtonCounter/index";
+import { ButtonCounter } from "@/components/ButtonCounter";
 
 import { whyDidYouUpdate } from "@/components/Hooks/useWhyDidYouUpdate";
 
@@ -24,11 +24,11 @@ const Counter = React.memo((props: ICounter) => {
 });
 
 type HomeProps = {
-  title: string;
-  fetching: boolean | null;
-} & DispatchProp & IState & RouteComponentProps;
-
-
+  title: string,
+  fetching: boolean | null,
+} & DispatchProp &
+  IState &
+  RouteComponentProps;
 
 const Home = (props: HomeProps) => {
   // REVIEW 此处应该将 count 状态进行单独封装 不然会造成子组件的不必要的渲染
@@ -42,7 +42,9 @@ const Home = (props: HomeProps) => {
   return (
     <HomeWrapper>
       <Counter count={count} />
-      <button onClick={() => setCount(count + 1)} type="button">Increment</button>
+      <button onClick={() => setCount(count + 1)} type="button">
+        Increment
+      </button>
 
       <ButtonCounter />
       <Position />
@@ -61,7 +63,6 @@ const Home = (props: HomeProps) => {
     </HomeWrapper>
   );
 };
-
 
 const mapStateToProps = ({ home, loading }: IState, ownProps: HomeProps) => {
   return { home, fetching: loading.home.fetch, ...ownProps };
