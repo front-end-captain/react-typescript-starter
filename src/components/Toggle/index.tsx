@@ -1,6 +1,6 @@
 import { Component } from "react";
 
-import { isFunction } from "./../../lib/helps";
+import { isFunction } from "@/lib/helps";
 
 const state = {
   show: false,

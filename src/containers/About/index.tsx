@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect, DispatchProp } from "react-redux";
 
-import { IState } from "./../../modal/index";
+import { IState } from "@/modal";
 
 interface AboutProps extends DispatchProp {
   title: string;
@@ -18,7 +18,7 @@ const About = (props: AboutProps) => {
   };
   const save = () => {
     dispatch({ type: "about/save", payload: 10 });
-  }
+  };
   return (
     <div>
       <span>{number}</span>

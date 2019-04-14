@@ -1,25 +1,26 @@
-import React, { useState, ChangeEvent } from "react";
+import React, {useState, ChangeEvent, ReactElement} from "react";
 
-const UserForm = () => {
+let UserForm: () => ReactElement;
+UserForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
   const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { target: { value: name } } = event;
+    const {target: {value: name}} = event;
     setName(name);
   };
 
   const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { target: { value: email } } = event;
+    const {target: {value: email}} = event;
     setEmail(email);
   };
 
   return (
     <>
-    	<input value={name} onChange={handleNameChange} />
-      <input value={email} onChange={handleEmailChange} />
+      <input value={name} onChange={handleNameChange}/>
+      <input value={email} onChange={handleEmailChange}/>
     </>
   );
-}
+};
 
 export { UserForm };

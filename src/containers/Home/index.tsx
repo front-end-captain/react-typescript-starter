@@ -2,17 +2,13 @@ import React, { useState } from "react";
 import { connect, DispatchProp } from "react-redux";
 import { RouteComponentProps } from "react-router-dom";
 
-// import ButtonCounter from "./../../components/ButtonCounter/index";
-// import Toggle from "./../../components/Toggle/index";
-
-import { IState } from "./../../modal/index";
-// import Button from "../../components/Button";
-// import Menu from "../../components/Menu";
+import { IState } from "@/modal";
 import Collapse from "./../../components/Hooks/collapse";
-import { SquaresToDraw } from "./../../components/SquaresToDraw/index";
-import { Position } from "./../../components/Position/index";
+import { SquaresToDraw } from "@/components/SquaresToDraw";
+import { Position } from "@/components/Position";
+import { ButtonCounter } from "@/components/ButtonCounter/index";
 
-import { whyDidYouUpdate } from "./../../components/Hooks/useWhyDidYouUpdate";
+import { whyDidYouUpdate } from "@/components/Hooks/useWhyDidYouUpdate";
 
 import { HomeWrapper } from "./index.css";
 
@@ -23,7 +19,7 @@ interface ICounter {
   style?: React.CSSProperties;
 }
 const Counter = React.memo((props: ICounter) => {
-  // whyDidYouUpdate("Counter", props);
+  whyDidYouUpdate("Counter", props);
   return <div style={props.style}>{props.count}</div>;
 });
 
@@ -48,6 +44,7 @@ const Home = (props: HomeProps) => {
       <Counter count={count} />
       <button onClick={() => setCount(count + 1)} type="button">Increment</button>
 
+      <ButtonCounter />
       <Position />
 
       <button onClick={fetch}>fetch</button>

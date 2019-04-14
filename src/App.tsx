@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { FunctionComponent } from "react";
 import { BrowserRouter as Router, NavLink, Route } from "react-router-dom";
 import { hot, setConfig } from "react-hot-loader";
 
@@ -12,7 +12,7 @@ setConfig({
   pureRender: true,
 });
 
-const App: React.SFC = () => {
+const App: FunctionComponent = () => {
   return (
     <Router>
       <div className="nav-container">

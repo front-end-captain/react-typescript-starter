@@ -22,7 +22,7 @@ class ButtonCounter extends Component {
         clickCount: prevState.clickCount - 1,
       };
     });
-  }
+  };
 
   render() {
     const { clickCount } = this.state;
@@ -37,4 +37,4 @@ class ButtonCounter extends Component {
   }
 }
 
-export default ButtonCounter;
+export { ButtonCounter }

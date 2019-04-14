@@ -1,6 +1,6 @@
-import { Modal } from "./../../lib/types";
-import { homeEffects } from "./../Home/index";
-import { createEffectsMap } from "./../../lib/helps";
+import { Modal } from "@/lib/types";
+import { homeEffects } from "@/modal/Home";
+import { createEffectsMap } from "@/lib/helps";
 
 export const LoadingState = {
   home: createEffectsMap(homeEffects),

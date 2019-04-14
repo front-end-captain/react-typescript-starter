@@ -15,7 +15,6 @@ const useToggle = () => {
   return { active, handleToggle };
 };
 
-// TODO 使用 memo 包裹组件 避免重复渲染
 const Panel: FunctionComponent<Props> = memo(({ title, children }) => {
   const { active, handleToggle } = useToggle();
 

@@ -26,7 +26,7 @@ const useFetchData = (url: string, initValue: any, options: AxiosRequestConfig =
 
   let ignore = false;
 
-  const fetchData = async () => {
+  let fetchData: () => void = async () => {
     updateLoading(true);
 
     const response = await axios(url, options);

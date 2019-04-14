@@ -1,10 +1,10 @@
-import React, { SFC } from "react";
+import React, { FunctionComponent } from "react";
 
 import Toggle from "./../Toggle/index";
 
 type Props = { title: string };
 
-const ToggleMenu: SFC<Props> = ({ title, children }) => {
+const ToggleMenu: FunctionComponent<Props> = ({ title, children }) => {
   return (
     <Toggle>
       {({ show, toggle }) => (

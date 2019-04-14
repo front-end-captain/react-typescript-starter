@@ -1,4 +1,4 @@
-import { Modal } from "./../../lib/types";
+import { Modal } from "@/lib/types";
 
 export const AboutState = {
   number: 0,

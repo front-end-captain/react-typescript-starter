@@ -1,5 +1,5 @@
-import React, { MouseEvent, SFC } from "react";
-import { withDefaultProps } from "./../../lib/helps";
+import React, { MouseEvent, FunctionComponent } from "react";
+import { withDefaultProps } from "@/lib/helps";
 
 const defaultProps = {
   color: "red",
@@ -11,7 +11,7 @@ type Props = {
   onClick?: (event: MouseEvent<HTMLElement>) => void;
 } & DefaultProps;
 
-const Button: SFC<Props> = ({ onClick: handleClick, children, color }) => {
+const Button: FunctionComponent<Props> = ({ onClick: handleClick, children, color }) => {
   return (
     <button style={{ color }} onClick={handleClick}>
       {children}
