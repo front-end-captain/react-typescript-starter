@@ -8,20 +8,9 @@ import { SquaresToDraw } from "@/components/SquaresToDraw";
 import { Position } from "@/components/Position";
 import { ButtonCounter } from "@/components/ButtonCounter";
 
-import { whyDidYouUpdate } from "@/components/Hooks/useWhyDidYouUpdate";
-
 import { HomeWrapper } from "./index.css";
 
 const { Panel } = Collapse;
-
-interface ICounter {
-  count: number;
-  style?: React.CSSProperties;
-}
-const Counter = React.memo((props: ICounter) => {
-  whyDidYouUpdate("Counter", props);
-  return <div style={props.style}>{props.count}</div>;
-});
 
 type HomeProps = {
   title: string,
@@ -31,8 +20,6 @@ type HomeProps = {
   RouteComponentProps;
 
 const Home = (props: HomeProps) => {
-  // REVIEW 此处应该将 count 状态进行单独封装 不然会造成子组件的不必要的渲染
-  const [count, setCount] = useState(0);
   const { dispatch, home, fetching } = props;
 
   const fetch = () => {
@@ -41,11 +28,6 @@ const Home = (props: HomeProps) => {
 
   return (
     <HomeWrapper>
-      <Counter count={count} />
-      <button onClick={() => setCount(count + 1)} type="button">
-        Increment
-      </button>
-
       <ButtonCounter />
       <Position />
 
