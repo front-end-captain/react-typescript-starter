@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect, DispatchProp } from "react-redux";
 import { RouteComponentProps } from "react-router-dom";
 
@@ -7,6 +7,7 @@ import Collapse from "./../../components/Hooks/collapse";
 import { SquaresToDraw } from "@/components/SquaresToDraw";
 import { Position } from "@/components/Position";
 import { ButtonCounter } from "@/components/ButtonCounter";
+import "@/components/HooksTest/example";
 
 import { HomeWrapper } from "./index.css";
 
