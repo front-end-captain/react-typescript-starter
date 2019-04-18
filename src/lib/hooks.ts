@@ -1,12 +1,6 @@
-interface Instance<I extends Object> {
+type Instance<I> = {
   render: () => void;
-  [key: string]: (param?: any) => void | any;
-}
-
-// type Instance<I, K = keyof I> = {
-//   render: () => void;
-//   keyof I?: (param?: any) => void | any;
-// };
+} & Required<I>;
 
 export type Component<I> = () => Instance<I>;
 

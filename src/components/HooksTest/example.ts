@@ -6,9 +6,8 @@ let times = 0;
 
 interface CounterInstance {
   click: () => void;
-  query: (word: string) =>  void;
+  query: (word: string) => void;
   noop: () => void;
-  render: () => void;
 }
 
 const Counter: Component<CounterInstance> = () => {
