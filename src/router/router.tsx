@@ -1,20 +1,60 @@
 import React, { FunctionComponent } from "react";
-import { Switch, Route, BrowserRouter } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
 import { RouteTable, Component } from "./config";
 
+// TODO
+// [
+//   {
+//     path: "/",
+//     component: Home,
+//   },
+//   {
+//     path: "/about",
+//     component: About,
+//     children: [
+//       {
+//         path: "/toggle",
+//         component: Toggle,
+//       },
+//       {
+//         path: "/square",
+//         component: SquaresToDraw,
+//       },
+//     ],
+//   },
+// ];
+//
+// [
+//   {
+//     path: "/",
+//     component: Home,
+//   },
+//   {
+//     path: "/about",
+//     component: About,
+//   },
+//   {
+//     path: "/about/toggle",
+//     component: Toggle,
+//   },
+//   {
+//     path: "/about/square",
+//     component: SquaresToDraw,
+//   },
+// ]
 const createRouteTable = (routes: RouteTable) => {
   return routes.map((route) => {
     const { component: Component, path, children } = route;
     if (Array.isArray(children) && children.length > 0) {
       return (
-        <Route path={path} component={Component} key={path}>
+        <Route path={path} extra component={Component} key={path}>
           {createRouteTable(children)}
         </Route>
       );
     }
 
-    return <Route path={path} component={Component} key={path} />;
+    return <Route path={path} extra component={Component} key={path} />;
   });
 };
 
@@ -24,14 +64,13 @@ interface Props {
 }
 
 const AppRouterTable: FunctionComponent<Props> = ({ notFound: NotFound, routes }) => {
-  const renderNotFound = () => <Route component={NotFound} />;
+  const renderNotFound = () => <Route path="*" component={NotFound} />;
+  console.log(createRouteTable(routes));
   return (
-    <BrowserRouter>
-      <Switch>
-        {createRouteTable(routes)}
-        {renderNotFound()}
-      </Switch>
-    </BrowserRouter>
+    <Switch>
+      {createRouteTable(routes)}
+      {renderNotFound()}
+    </Switch>
   );
 };
 
