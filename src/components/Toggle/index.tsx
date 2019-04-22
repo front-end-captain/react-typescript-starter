@@ -41,4 +41,4 @@ class Toggle extends Component<Props, State> {
   }
 }
 
-export default Toggle;
+export { Toggle };

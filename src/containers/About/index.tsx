@@ -1,5 +1,6 @@
 import * as React from "react";
 import { connect, DispatchProp } from "react-redux";
+import { Link } from "react-router-dom";
 
 import { IState } from "@/modal";
 
@@ -25,6 +26,8 @@ const About = (props: AboutProps) => {
       <button onClick={add}>add</button>
       <button onClick={reduce}>minus</button>
       <button onClick={save}>save</button>
+      <Link to="toggle">Toggle</Link>
+      <Link to="square">Square</Link>
     </div>
   );
 };
