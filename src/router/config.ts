@@ -11,12 +11,11 @@ type Component = ComponentType<RouteComponentProps<any>> | ComponentType<any>;
 type route = {
   path: string,
   component: Component,
-  children?: route[],
 };
 
-type RouteTable = route[];
+type enhanceRoute = route & Partial<{ children: route[] }>;
 
-const routeTable: RouteTable = [
+const routeTable: enhanceRoute[] = [
   {
     path: "/",
     component: Home,
@@ -37,4 +36,4 @@ const routeTable: RouteTable = [
   },
 ];
 
-export { routeTable, RouteTable, Component };
+export { routeTable, Component, route, enhanceRoute };
