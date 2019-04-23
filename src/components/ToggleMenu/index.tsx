@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 
-import Toggle from "./../Toggle/index";
+import { Toggle } from "./../Toggle/index";
 
 type Props = { title: string };
 
@@ -19,4 +19,4 @@ const ToggleMenu: FunctionComponent<Props> = ({ title, children }) => {
   );
 };
 
-export default ToggleMenu;
+export { ToggleMenu };

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect, DispatchProp } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link } from "@reach/router";
 
 import { IState } from "@/modal";
 
@@ -9,8 +9,8 @@ interface AboutProps extends DispatchProp {
   number: number;
 }
 
-const About = (props: AboutProps) => {
-  const { dispatch, number } = props;
+const About: React.FunctionComponent<AboutProps> = (props) => {
+  const { dispatch, number, children } = props;
   const add = () => {
     dispatch({ type: "about/add" });
   };
@@ -28,6 +28,8 @@ const About = (props: AboutProps) => {
       <button onClick={save}>save</button>
       <Link to="toggle">Toggle</Link>
       <Link to="square">Square</Link>
+      {/*<Link to="square/profile">Square</Link>*/}
+      {children}
     </div>
   );
 };

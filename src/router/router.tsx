@@ -1,83 +1,19 @@
 import React, { FunctionComponent } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Router } from "@reach/router";
 
-import { enhanceRoute, Component, route } from "./config";
-
-// TODO
-// [
-//   {
-//     path: "/",
-//     component: Home,
-//   },
-//   {
-//     path: "/about",
-//     component: About,
-//     children: [
-//       {
-//         path: "/toggle",
-//         component: Toggle,
-//       },
-//       {
-//         path: "/square",
-//         component: SquaresToDraw,
-//         children: [
-//           {
-//             path: "/profile",
-//             component: UserProfile,
-//           },
-//         ],
-//       },
-//     ],
-//   },
-// ];
-//
-// [
-//   {
-//     path: "/",
-//     component: Home,
-//   },
-//   {
-//     path: "/about",
-//     component: About,
-//   },
-//   {
-//     path: "/about/toggle",
-//     component: Toggle,
-//   },
-//   {
-//     path: "/about/square",
-//     component: SquaresToDraw,
-//   },
-//  {
-//     path: "/about/square/profile",
-//     component: UserProfile,
-//   },
-// ]
-
-// REVIEW 只能遍历到第二层
-const flatRoutes: (routes: enhanceRoute[]) => route[] = function(routes) {
-  let result: route[] = [];
-
-  routes.forEach((route) => {
-
-     if (Array.isArray(route.children) && route.children.length > 0) {
-       const newChildren: route[] = route.children.map((child) => {
-         return { path: `${route.path}${child.path}`, component: child.component };
-       });
-       result.push({ path: route.path, component: route.component });
-       result = result.concat(newChildren);
-    }
-
-     result.push(route);
-  });
-
-  return result;
-};
+import { enhanceRoute, Component } from "./config";
 
 const createRouteTable: (routes: enhanceRoute[]) => JSX.Element[] = function(routes) {
-  return flatRoutes(routes).map((route) => {
-    const { component: Component, path } = route;
-    return <Route path={path} extra component={Component} key={path} />;
+  return routes.map((route) => {
+    const { component: Component, path, children } = route;
+    if (Array.isArray(children) && children.length > 0) {
+      return (
+        <Component path={path} key={path}>
+          {createRouteTable(children)}
+        </Component>
+      );
+    }
+    return <Component path={path} key={path} />;
   });
 };
 
@@ -86,18 +22,18 @@ interface Props {
   routes: enhanceRoute[];
 }
 
-const AppRouterTable: FunctionComponent<Props> = ({ notFound: NotFound, routes }) => {
-  const renderNotFound = () => <Route path="*" component={NotFound} />;
+const AppRouter: FunctionComponent<Props> = ({ notFound: NotFound, routes }) => {
+  const renderNotFound = () => <NotFound default />;
   return (
-    <Switch>
+    <Router>
       {createRouteTable(routes)}
       {renderNotFound()}
-    </Switch>
+    </Router>
   );
 };
 
-AppRouterTable.defaultProps = {
-  notFound: () => <span>oops. something wrong</span>,
+AppRouter.defaultProps = {
+  notFound: () => <span>oops!. The page you visited is not found.</span>,
 };
 
-export { AppRouterTable };
+export { AppRouter };

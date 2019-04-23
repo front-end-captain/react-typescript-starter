@@ -1,10 +1,9 @@
 import React, { FunctionComponent } from "react";
 import { hot, setConfig } from "react-hot-loader";
-import { BrowserRouter as Router } from "react-router-dom";
 
 import { Header } from "@/containers/Header";
 import { NotFound } from "@/components/NotFound";
-import { AppRouterTable } from "@/router";
+import { AppRouter } from "@/router";
 import { routeTable } from "./router/config";
 
 import "./App.css";
@@ -16,10 +15,10 @@ setConfig({
 
 const App: FunctionComponent = () => {
   return (
-    <Router>
+    <>
       <Header />
-      <AppRouterTable routes={routeTable} notFound={NotFound} />
-    </Router>
+      <AppRouter routes={routeTable} notFound={NotFound} />
+    </>
   );
 };
 

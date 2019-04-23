@@ -1,8 +1,8 @@
-import React, { SFC } from "react";
+import React, { FunctionComponent } from "react";
 
-import ToggleMenu from "../ToggleMenu/index";
+import { ToggleMenu } from "../ToggleMenu/index";
 
-const Menu: SFC = () => {
+const Menu: FunctionComponent = () => {
   return (
     <>
       <ToggleMenu title="One">content one</ToggleMenu>
@@ -10,6 +10,6 @@ const Menu: SFC = () => {
       <ToggleMenu title="Three">content Three</ToggleMenu>
     </>
   );
-}
+};
 
-export default Menu;
+export { Menu };

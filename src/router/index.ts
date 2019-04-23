@@ -1,3 +1,3 @@
-import { AppRouterTable } from "./router";
+import { AppRouter } from "./router";
 
-export { AppRouterTable };
+export { AppRouter };

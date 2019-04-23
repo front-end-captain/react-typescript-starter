@@ -1,15 +1,15 @@
 import React, { FunctionComponent } from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "@reach/router";
 
 import { HeaderWrapper } from "./index.css";
 
 const Header: FunctionComponent = () => {
   return (
     <HeaderWrapper>
-      <NavLink exact to="/">
+      <Link to="/">
         Home
-      </NavLink>
-      <NavLink to="/about">About</NavLink>
+      </Link>
+      <Link to="/about">About</Link>
     </HeaderWrapper>
   );
 };

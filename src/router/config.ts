@@ -1,10 +1,11 @@
 import { ComponentType } from "react";
-import { RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps } from "@reach/router";
 
 import Home from "./../containers/Home/index";
 import About from "./../containers/About/index";
 import { Toggle } from "@/components/Toggle";
 import { SquaresToDraw } from "@/components/SquaresToDraw";
+import { Menu } from "@/components/Menu";
 
 type Component = ComponentType<RouteComponentProps<any>> | ComponentType<any>;
 
@@ -13,7 +14,7 @@ type route = {
   component: Component,
 };
 
-type enhanceRoute = route & Partial<{ children: route[] }>;
+type enhanceRoute = route & Partial<{ children: enhanceRoute[] }>;
 
 const routeTable: enhanceRoute[] = [
   {
@@ -21,19 +22,25 @@ const routeTable: enhanceRoute[] = [
     component: Home,
   },
   {
-    path: "/about",
+    path: "about",
     component: About,
     children: [
       {
-        path: "/toggle",
+        path: "toggle",
         component: Toggle,
       },
       {
-        path: "/square",
+        path: "square",
         component: SquaresToDraw,
+        children: [
+          {
+            path: "profile",
+            component: Menu,
+          },
+        ],
       },
     ],
   },
 ];
 
-export { routeTable, Component, route, enhanceRoute };
+export { routeTable, Component, enhanceRoute };

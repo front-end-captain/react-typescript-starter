@@ -1,11 +1,12 @@
 import React, { FunctionComponent, ReactNode, memo } from "react";
+import { Link } from "@reach/router";
 import classNames from "classnames";
 
 import { useHistory } from "./../Hooks/useHistory";
 
 import { SquareWrapper } from "./index.css";
 
-const SquaresToDraw: FunctionComponent = memo(() => {
+const SquaresToDraw: FunctionComponent = memo(({ children }) => {
   const { state, set, undo, redo, clear, canRedo, canUndo } = useHistory({});
 
   return (
@@ -36,6 +37,8 @@ const SquaresToDraw: FunctionComponent = memo(() => {
           return blocks;
         })([], 0, 100)}
       </div>
+      <Link to="profile">Profile</Link>
+      {children}
     </SquareWrapper>
   );
 });
