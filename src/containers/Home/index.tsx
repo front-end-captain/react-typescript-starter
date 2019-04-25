@@ -7,6 +7,7 @@ import Collapse from "./../../components/Hooks/collapse";
 import { SquaresToDraw } from "@/components/SquaresToDraw";
 import { Position } from "@/components/Position";
 import { ButtonCounter } from "@/components/ButtonCounter";
+import { ContextDemo } from "@/components/Context";
 import "@/components/HooksTest/example";
 
 import { HomeWrapper } from "./index.css";
@@ -43,6 +44,7 @@ const Home = (props: HomeProps) => {
       </Collapse>
 
       <SquaresToDraw />
+      <ContextDemo />
     </HomeWrapper>
   );
 };

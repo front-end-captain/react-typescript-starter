@@ -1,6 +1,6 @@
-import { Modal } from "./../../lib/types";
+import { Modal } from "@/lib/types";
 import { Store } from "redux";
-import { sleep } from "./../../lib/helps";
+import { sleep } from "@/lib/helps";
 
 export const HomeState = {
   text: "hi, redux-effect",
@@ -8,24 +8,23 @@ export const HomeState = {
 
 let homeEffects: { [key: string]: (store: Store) => Promise<void> };
 homeEffects = {
-  "fetch": async ({dispatch}: Store) => {
+  "fetch": async ({ dispatch }: Store) => {
     dispatch({
       type: "home/save",
-      payload: {text: "you click the button, updated after 3 seconds, please check dev tools"},
+      payload: { text: "you click the button, updated after 3 seconds, please check dev tools" },
     });
 
+    await sleep(3000);
+
+    dispatch({ type: "home/save", payload: { text: "updated!, cleared after 3 seconds" } });
 
     await sleep(3000);
 
-    dispatch({type: "home/save", payload: {text: "updated!, cleared after 3 seconds"}});
+    dispatch({ type: "home/clear" });
 
     await sleep(3000);
 
-    dispatch({type: "home/clear"});
-
-    await sleep(3000);
-
-    dispatch({type: "home/save", payload: {text: "hello world"}});
+    dispatch({ type: "home/save", payload: { text: "hello world" } });
   },
 };
 
@@ -33,7 +32,7 @@ const Home: Modal = {
   namespace: "home",
   state: HomeState,
   reducers: {
-    save: (state, { payload }) => ({ ...state, ...payload }),
+    save: (state, { payload }) => ({ ...state, ...payload, state }),
     clear: (state) => ({ ...state, text: "" }),
   },
   effects: homeEffects,
