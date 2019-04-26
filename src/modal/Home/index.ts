@@ -2,12 +2,17 @@ import { Modal } from "@/lib/types";
 import { Store } from "redux";
 import { sleep } from "@/lib/helps";
 
-export const HomeState = {
+const homeState = {
   text: "hi, redux-effect",
 };
 
-let homeEffects: { [key: string]: (store: Store) => Promise<void> };
-homeEffects = {
+const homeReducers = {
+  // @ts-ignore
+  save: (state: HomeState, { text }) => ({ ...state, text: text }),
+  clear: () => ({ text: "" }),
+};
+
+const homeEffects = {
   "fetch": async ({ dispatch }: Store) => {
     dispatch({
       type: "home/save",
@@ -28,16 +33,18 @@ homeEffects = {
   },
 };
 
-const Home: Modal = {
+const Home: Modal<HomeState, HomeReducers, HomeEffects> = {
   namespace: "home",
-  state: HomeState,
-  reducers: {
-    save: (state, { payload }) => ({ ...state, ...payload, state }),
-    clear: (state) => ({ ...state, text: "" }),
-  },
+  state: homeState,
+  // @ts-ignore
+  reducers: homeReducers,
   effects: homeEffects,
 };
 
-export { homeEffects };
+type HomeEffects = typeof homeEffects;
 
-export default Home;
+type HomeState = typeof homeState;
+
+type HomeReducers = typeof homeReducers;
+
+export { Home, homeEffects, HomeState };

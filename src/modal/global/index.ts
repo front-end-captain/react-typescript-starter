@@ -2,29 +2,38 @@ import { Modal } from "@/lib/types";
 import { homeEffects } from "@/modal/Home";
 import { createEffectsMap } from "@/lib/helps";
 
-export const LoadingState = {
+const loadingState = {
   home: createEffectsMap(homeEffects),
 };
 
-export const Loading: Modal = {
-  namespace: "loading",
-  state: LoadingState,
-  reducers: {
-    loading: (state, { payload: { name, type, loading } }) => ({
+const loadingReducers = {
+  // @ts-ignore
+  loading: (state: LoadingState, { payload: { name, type, loading } }) => ({
       ...state,
       [name]: { [type]: loading },
     }),
-  },
+};
+
+export const Loading: Modal<LoadingState, LoadingReducers> = {
+  namespace: "loading",
+  state: loadingState,
+  // @ts-ignore
+  reducers: loadingReducers,
 };
 
 
-export const GlobalState = {
+export const globalState = {
   login: false,
 };
 
-const Global: Modal = {
+// @ts-ignore
+const Global: Modal<GlobalState, any> = {
   namespace: "global",
-  state: GlobalState,
+  state: globalState,
 };
 
-export default Global;
+type LoadingState = typeof loadingState;
+type LoadingReducers = typeof loadingReducers
+type GlobalState = typeof globalState;
+
+export { Global, LoadingState, LoadingReducers, GlobalState };
