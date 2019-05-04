@@ -8,6 +8,8 @@ import { SquaresToDraw } from "@/components/SquaresToDraw";
 import { Position } from "@/components/Position";
 import { ButtonCounter } from "@/components/ButtonCounter";
 import "@/components/HooksTest/example";
+import { Counter } from "@/components/Counter";
+import { AnotherCounter } from "@/components/Counter/anotherCounter"
 
 import { HomeWrapper } from "./index.css";
 
@@ -29,20 +31,22 @@ const Home = (props: HomeProps) => {
 
   return (
     <HomeWrapper>
-      <ButtonCounter />
-      <Position />
+      <AnotherCounter />
+      <Counter />
+      {/*<ButtonCounter />*/}
+      {/*<Position />*/}
 
-      <button onClick={fetch}>fetch</button>
-      <span style={{ color: "red" }}>{home.text}</span>
-      <span style={{ color: "orange" }}>{fetching ? "loading" : null}</span>
+      {/*<button onClick={fetch}>fetch</button>*/}
+      {/*<span style={{ color: "red" }}>{home.text}</span>*/}
+      {/*<span style={{ color: "orange" }}>{fetching ? "loading" : null}</span>*/}
 
-      <Collapse>
-        <Panel title="one">content one</Panel>
-        <Panel title="two">content two</Panel>
-        <Panel title="three">content three</Panel>
-      </Collapse>
+      {/*<Collapse>*/}
+      {/*  <Panel title="one">content one</Panel>*/}
+      {/*  <Panel title="two">content two</Panel>*/}
+      {/*  <Panel title="three">content three</Panel>*/}
+      {/*</Collapse>*/}
 
-      <SquaresToDraw />
+      {/*<SquaresToDraw />*/}
     </HomeWrapper>
   );
 };
