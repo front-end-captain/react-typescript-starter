@@ -1,8 +1,8 @@
 import { ComponentType } from "react";
 import { RouteComponentProps } from "@reach/router";
 
-import Home from "./../containers/Home/index";
-import About from "./../containers/About/index";
+import Home from "@/containers/Home/index";
+import About from "@/containers/About/index";
 import { Toggle } from "@/components/Toggle";
 import { SquaresToDraw } from "@/components/SquaresToDraw";
 import { Menu } from "@/components/Menu";

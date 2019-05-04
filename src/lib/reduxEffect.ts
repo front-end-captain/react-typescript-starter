@@ -1,15 +1,17 @@
 import { Dispatch, ReducersMapObject, MiddlewareAPI, AnyAction, Store } from "redux";
-import { State, Modal } from "./types";
+import { State, Modal, InitState, InitReducers } from "./types";
 
 /**
  *
  * @param modals
  */
-const reduxReducers = function reduxReducers(modals: Modal[]): ReducersMapObject {
+const reduxReducers = function reduxReducers(modals: Modal<InitState, InitReducers>[]): ReducersMapObject {
   const reducers: ReducersMapObject = {};
 
-  modals.map((modal: Modal) => {
-    reducers[modal.namespace] = (state: State, action: AnyAction) => {
+  modals.forEach((modal) => {
+    reducers[modal.namespace] = (state: State<InitState>, action: AnyAction) => {
+
+      // dispatch({ type: "home/fetch" }) => key: home, type: fetch
       const [key, type] = action.type.split("/");
 
       if (
@@ -22,38 +24,19 @@ const reduxReducers = function reduxReducers(modals: Modal[]): ReducersMapObject
         return modal.reducers[type](state, action);
       }
 
-      return state || modal.state || {};
+      return state || modal.state;
     };
   });
 
   return reducers;
 };
 
-/**
- *
- * @param modals
- */
-const reduxEffects = (modals: Modal[]) => (store: MiddlewareAPI) => (next: Dispatch) => async (
-  action: AnyAction,
-) => {
-  next(action);
-  const [key, type] = action.type.split("/");
-
-  if (!key || !type) {
-    return;
-  }
-
-  const currentModal: Modal = modals.find((modal: Modal) => modal.namespace === key) || modals[0];
-  if (currentModal && currentModal.effects && typeof currentModal.effects[type] === "function") {
-    await currentModal.effects[type](store as Store, action);
-  }
-};
 
 /**
  *
  * @param modals
  */
-const reduxEffectsWithLoading = (modals: Modal[]) => (store: MiddlewareAPI) => (
+const reduxEffectsWithLoading = (modals: Modal<InitState, InitReducers>[]) => (store: MiddlewareAPI) => (
   next: Dispatch,
 ) => async (action: AnyAction) => {
   next(action);
@@ -63,12 +46,15 @@ const reduxEffectsWithLoading = (modals: Modal[]) => (store: MiddlewareAPI) => (
     return;
   }
 
-  const currentModal: Modal = modals.find((modal: Modal) => modal.namespace === key) || modals[0];
+  const currentModal = modals.find((modal) => modal.namespace === key) || modals[0];
+
+  // @ts-ignore
   if (currentModal && currentModal.effects && typeof currentModal.effects[type] === "function") {
     await store.dispatch({ type: `loading/loading`, payload: { name: key, type, loading: true } });
+    // @ts-ignore
     await currentModal.effects[type](store as Store, action);
     await store.dispatch({ type: `loading/loading`, payload: { name: key, type, loading: false } });
   }
 };
 
-export { reduxEffects, reduxReducers, reduxEffectsWithLoading };
+export { reduxReducers, reduxEffectsWithLoading };

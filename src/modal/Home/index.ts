@@ -1,44 +1,50 @@
-import { Modal } from "./../../lib/types";
+import { Modal } from "@/lib/types";
 import { Store } from "redux";
-import { sleep } from "./../../lib/helps";
+import { sleep } from "@/lib/helps";
 
-export const HomeState = {
+const homeState = {
   text: "hi, redux-effect",
 };
 
-let homeEffects: { [key: string]: (store: Store) => Promise<void> };
-homeEffects = {
-  "fetch": async ({dispatch}: Store) => {
+const homeReducers = {
+  // @ts-ignore
+  save: (state: HomeState, { text }) => ({ ...state, text: text }),
+  clear: () => ({ text: "" }),
+};
+
+const homeEffects = {
+  "fetch": async ({ dispatch }: Store) => {
     dispatch({
       type: "home/save",
-      payload: {text: "you click the button, updated after 3 seconds, please check dev tools"},
+      payload: { text: "you click the button, updated after 3 seconds, please check dev tools" },
     });
 
+    await sleep(3000);
+
+    dispatch({ type: "home/save", payload: { text: "updated!, cleared after 3 seconds" } });
 
     await sleep(3000);
 
-    dispatch({type: "home/save", payload: {text: "updated!, cleared after 3 seconds"}});
+    dispatch({ type: "home/clear" });
 
     await sleep(3000);
 
-    dispatch({type: "home/clear"});
-
-    await sleep(3000);
-
-    dispatch({type: "home/save", payload: {text: "hello world"}});
+    dispatch({ type: "home/save", payload: { text: "hello world" } });
   },
 };
 
-const Home: Modal = {
+const Home: Modal<HomeState, HomeReducers, HomeEffects> = {
   namespace: "home",
-  state: HomeState,
-  reducers: {
-    save: (state, { payload }) => ({ ...state, ...payload }),
-    clear: (state) => ({ ...state, text: "" }),
-  },
+  state: homeState,
+  // @ts-ignore
+  reducers: homeReducers,
   effects: homeEffects,
 };
 
-export { homeEffects };
+type HomeEffects = typeof homeEffects;
 
-export default Home;
+type HomeState = typeof homeState;
+
+type HomeReducers = typeof homeReducers;
+
+export { Home, homeEffects, HomeState };

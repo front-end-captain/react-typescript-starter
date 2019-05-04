@@ -1,15 +1,15 @@
 import { createStore, applyMiddleware, combineReducers, Middleware, Store } from "redux";
 import { reduxReducers, reduxEffectsWithLoading } from "@/lib/reduxEffect";
-import { Modal } from "@/lib/types";
+import { Modal, InitState, InitReducers } from "@/lib/types";
 
 import { composeWithDevTools } from "redux-devtools-extension";
 
-import Home, { HomeState } from "./../modal/Home/index";
-import About, { AboutState } from "./../modal/About/index";
-import Global, { GlobalState, LoadingState, Loading } from "./../modal/global/index";
+import { Home, HomeState } from "./../modal/Home";
+import { About, AboutState } from "./../modal/About";
+import { Global, GlobalState, LoadingState, Loading } from "./../modal/global";
 
-
-const modals: Modal[] = [Home, About, Global, Loading];
+// @ts-ignore
+const modals: Modal<InitState, InitReducers>[] = [Home, About, Global, Loading];
 const reducers = combineReducers(reduxReducers(modals));
 const middlewareList: Middleware[] = [reduxEffectsWithLoading(modals)];
 const enhanceMiddleware = (middlewareList: Middleware[]) => {
@@ -22,10 +22,10 @@ const enhanceMiddleware = (middlewareList: Middleware[]) => {
 
 
 export interface IState {
-  readonly home: typeof HomeState;
-  readonly about: typeof AboutState;
-  readonly global: typeof GlobalState;
-  readonly loading: typeof LoadingState;
+  readonly home: HomeState;
+  readonly about: AboutState;
+  readonly global: GlobalState;
+  readonly loading: LoadingState;
 }
 
 export default function configureStore(initialState?: any): Store {
