@@ -6,8 +6,6 @@ const Counter = () => {
   const count = counterStore.useStore((S) => S.count);
   const times = counterStore.useStore((S) => S.times);
 
-  console.log(counterStore);
-
   return (
     <div>
       <h2>Counter</h2>
@@ -18,6 +16,7 @@ const Counter = () => {
       <button onClick={() => counterStore.dispatch((R) => R.decrement)}>-</button>
       <button onClick={() => counterStore.dispatch((A) => A.increment)}>+</button>
       <button onClick={() => counterStore.dispatch((A) => A.asyncIncrement, 10)}>async+</button>
+      <button onClick={() => counterStore.dispatch((A) => A.toggleVisible, true)}>toggle</button>
     </div>
   );
 };

@@ -17,7 +17,7 @@ export type Effects = {
   [key: string]: Effect,
 };
 
-export type Update<S> = (set: any, action: Reducer<S>, payload: any) => any;
+export type Update<S> = (set: any, store: S) => any;
 
 export interface Updater<S> {
   update: Update<S>;

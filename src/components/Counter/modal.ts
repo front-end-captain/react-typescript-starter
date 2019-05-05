@@ -1,10 +1,11 @@
-import { Store } from "@/lib/store";
+import { Store } from "@/lib/store/index";
 
 const counterStore = new Store({
   name: "counter",
   state: {
     count: 10,
     times: 100,
+    visible: false,
   },
   reducers: {
     increment: (state, payload) => {
@@ -21,6 +22,9 @@ const counterStore = new Store({
     addTimes: (state) => {
       state.times += 100;
     },
+    toggleVisible: (state, payload) => {
+      state.visible = <boolean>payload;
+    }
   },
   effects: {
     asyncIncrement: async (payload) => {

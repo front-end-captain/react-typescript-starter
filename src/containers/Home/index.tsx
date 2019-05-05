@@ -2,6 +2,8 @@ import React from "react";
 import { connect, DispatchProp } from "react-redux";
 import { RouteComponentProps } from "react-router-dom";
 
+import { Modal } from "@/antd";
+
 import { IState } from "@/modal";
 import Collapse from "./../../components/Hooks/collapse";
 import { SquaresToDraw } from "@/components/SquaresToDraw";
@@ -10,7 +12,8 @@ import { ButtonCounter } from "@/components/ButtonCounter";
 import { ContextDemo } from "@/components/Context";
 import "@/components/HooksTest/example";
 import { Counter } from "@/components/Counter";
-import { AnotherCounter } from "@/components/Counter/anotherCounter"
+import { AnotherCounter } from "@/components/Counter/anotherCounter";
+import { counterStore } from "@/components/Counter/modal";
 
 import { HomeWrapper } from "./index.css";
 
@@ -25,6 +28,7 @@ type HomeProps = {
 
 const Home = (props: HomeProps) => {
   const { dispatch, home, fetching } = props;
+  const visible = counterStore.useStore((S) => S.visible);
 
   const fetch = () => {
     dispatch({ type: "home/fetch" });
@@ -32,7 +36,18 @@ const Home = (props: HomeProps) => {
 
   return (
     <HomeWrapper>
-      <ButtonCounter />
+      <Counter />
+      <AnotherCounter />
+      <Modal
+        visible={visible}
+        title="Basic modal"
+        onCancel={() => counterStore.dispatch((R) => R.toggleVisible, false)}
+      >
+        <p>some contents</p>
+        <p>some contents</p>
+        <p>some contents</p>
+      </Modal>
+      {/* <ButtonCounter />
       <Position />
 
       <button onClick={fetch}>fetch</button>
@@ -46,7 +61,7 @@ const Home = (props: HomeProps) => {
       </Collapse>
 
       <SquaresToDraw />
-      <ContextDemo />
+      <ContextDemo /> */}
     </HomeWrapper>
   );
 };

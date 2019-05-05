@@ -1,12 +1,10 @@
-const path = require('path');
+const path = require("path");
 const webpack = require("webpack");
-const { CheckerPlugin } = require('awesome-typescript-loader');
+const { CheckerPlugin } = require("awesome-typescript-loader");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-const ROOT = path.resolve(__dirname);
-const BUILD_PATH = path.resolve(__dirname, "/build");
-const ASSETS_PATH = "/assets/";
+const { BUILD_PATH, ASSETS_PATH } = require("./constant.js")
 
 module.exports = {
   mode: "development",
@@ -14,8 +12,8 @@ module.exports = {
   devtool: "cheap-module-source-map",
   output: {
     path: BUILD_PATH,
-    filename: '[name].js',
-    sourceMapFilename: '[name].map.js',
+    filename: "[name].js",
+    sourceMapFilename: "[name].map.js",
     publicPath: ASSETS_PATH,
   },
   module: {
@@ -30,7 +28,7 @@ module.exports = {
       {
         enforce: "pre",
         test: /\.ts[x]$/,
-        loader: "source-map-loader"
+        loader: "source-map-loader",
       },
       {
         test: /\.css.ts$/,
@@ -41,10 +39,11 @@ module.exports = {
         test: /\.css$/,
         use: [
           {
-            loader: "css-hot-loader",
-          },
-          {
             loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: true,
+              reloadAll: true,
+            },
           },
           {
             loader: require.resolve("css-loader"),
@@ -56,17 +55,18 @@ module.exports = {
           },
         ],
       },
-
       {
         test: /\.png/,
-        use: [{
-          loader: 'url-loader',
-          options: {
-            limit: 1024 * 20
-          }
-        }]
-      }
-    ]
+        use: [
+          {
+            loader: "url-loader",
+            options: {
+              limit: 1024 * 20,
+            },
+          },
+        ],
+      },
+    ],
   },
   devServer: {
     open: false,
@@ -85,8 +85,8 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".json", ".png"],
     alias: {
-      '@': path.resolve(__dirname, "./../src"),
-    }
+      "@": path.resolve(__dirname, "./../src"),
+    },
   },
   plugins: [
     new CheckerPlugin(),
@@ -100,5 +100,5 @@ module.exports = {
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-  ]
-}
+  ],
+};

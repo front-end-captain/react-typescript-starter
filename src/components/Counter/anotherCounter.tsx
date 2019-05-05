@@ -7,8 +7,6 @@ const AnotherCounter = () => {
     return { count: S.count, times: S.times };
   });
 
-  console.log(counterStore);
-
   return (
     <div>
       <h2>AnotherCounter</h2>
