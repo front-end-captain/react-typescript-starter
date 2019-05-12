@@ -1,9 +1,10 @@
 import React, { FunctionComponent } from "react";
+// @ts-ignore
 import { hot, setConfig } from "react-hot-loader";
 
-import { Header } from "@/containers/Header";
-import { NotFound } from "@/components/NotFound";
-import { AppRouter } from "@/router";
+import { Header } from "@/containers/Header/index.tsx";
+import { NotFound } from "@/components/NotFound/index.tsx";
+import { AppRouter } from "@/router/index.ts";
 import { routeTable } from "./router/config";
 
 import "./App.css";

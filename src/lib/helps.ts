@@ -1,5 +1,4 @@
 import { ComponentType } from "react";
-import { Effects } from "./types";
 
 declare type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
 
@@ -30,18 +29,4 @@ const withDefaultProps = <P extends object, DP extends Partial<P> = Partial<P>>(
 
 const isFunction = (value: any): boolean => typeof value === "function";
 
-
-type LoadingMap = {
-  [key: string]: null | boolean;
-}
-
-const createEffectsMap = (effects: Effects) => {
-  const loadingMap: LoadingMap = {};
-  Object.entries(effects).forEach((item) => {
-    loadingMap[item[0]] = null;
-  });
-
-  return loadingMap;
-};
-
-export { sleep, withDefaultProps, isFunction, createEffectsMap };
+export { sleep, withDefaultProps, isFunction };

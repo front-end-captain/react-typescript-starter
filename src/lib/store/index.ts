@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+
+// @ts-ignore
 import { produce } from "immer";
 import { Modal, Reducers, Effects, Updater, Update, Selector, ActionSelector } from "./types";
 import { getActionName } from "./helps";
@@ -44,6 +46,7 @@ class Store<S, R extends Reducers<S>, E extends Effects> {
   public useStore<P>(selector: Selector<S, P>): P {
     const [state, setState] = useState(this.store);
 
+    // @ts-ignore
     const update: Update<S> = (set: any, nextStore: S) => {
       if (!nextStore) {
         return null;

@@ -1,10 +1,10 @@
 const path = require("path");
 const webpack = require("webpack");
-const { CheckerPlugin } = require("awesome-typescript-loader");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const tsImportPluginFactory = require("ts-import-plugin");
 
-const { BUILD_PATH, ASSETS_PATH } = require("./constant.js")
+const { BUILD_PATH, ASSETS_PATH } = require("./constant.js");
 
 module.exports = {
   mode: "development",
@@ -20,10 +20,20 @@ module.exports = {
     rules: [
       {
         test: /\.ts[x]?$/,
-        loader: "awesome-typescript-loader",
+        loader: "ts-loader",
         options: {
-          errorsAsWarnings: false,
+          transpileOnly: true,
+          getCustomTransformers: () => ({
+            before: [
+              tsImportPluginFactory({
+                libraryName: "antd",
+                libraryDirectory: "es",
+                style: (name) => `${name}/style/css.js`,
+              }),
+            ],
+          }),
         },
+        exclude: /node_modules/,
       },
       {
         enforce: "pre",
@@ -89,7 +99,6 @@ module.exports = {
     },
   },
   plugins: [
-    new CheckerPlugin(),
     new MiniCssExtractPlugin({
       filename: "[name].css",
       chunkFilename: "[id].css",

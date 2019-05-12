@@ -21,4 +21,4 @@ const Counter = () => {
   );
 };
 
-export { Counter, counterStore };
+export { Counter  };

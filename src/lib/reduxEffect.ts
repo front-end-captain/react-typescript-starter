@@ -1,3 +1,5 @@
+
+// @ts-ignore
 import { Dispatch, ReducersMapObject, MiddlewareAPI, AnyAction, Store } from "redux";
 import { State, Modal, InitState, InitReducers } from "./types";
 

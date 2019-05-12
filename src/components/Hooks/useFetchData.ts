@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+
+// @ts-ignore
 import axios, { AxiosRequestConfig } from "axios";
 
 interface RequestError {
