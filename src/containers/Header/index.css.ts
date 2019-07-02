@@ -1,12 +1,25 @@
 import styled from "styled-components";
 
-const HeaderWrapper = styled.div`
+const HeaderWrapper = styled.nav`
   width: 100%;
-  display: flex;
-  flex-direction: row;
+  min-width: 1140px;
+  height: 66px;
+  background: rgba(66, 66, 66, 1);
 
-  a {
-    margin-right: 10px;
+  .header-container {
+    display: flex;
+    align-items: center;
+    width: 1200px;
+    height: inherit;
+    min-width: 1200px;
+    margin: 0 auto;
+
+    h1 {
+      color: #fff;
+      font-family: "FREESCPT",serif;
+      font-size: 36px;
+      flex: 1 1;
+    }
   }
 `;
 
