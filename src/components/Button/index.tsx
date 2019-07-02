@@ -1,22 +1,22 @@
 import React, { MouseEvent, FunctionComponent } from "react";
-import { withDefaultProps } from "@/lib/helps";
 
 const defaultProps = {
   color: "red",
 };
 
-type DefaultProps = typeof defaultProps;
-
 type Props = {
-  onClick?: (event: MouseEvent<HTMLElement>) => void;
-} & DefaultProps;
-
-const Button: FunctionComponent<Props> = ({ onClick: handleClick, children, color }) => {
-  return (
-    <button style={{ color }} onClick={handleClick}>
-      {children}
-    </button>
-  );
+  color?: string;
+  onClick?: (event: MouseEvent<HTMLElement>) => void,
 };
 
-export default withDefaultProps<Props>(defaultProps, Button);
+const Button: FunctionComponent<Props> = ({ children, color, onClick }) => {
+   return (
+      <button style={{ color }} onClick={onClick}>
+        {children}
+      </button>
+    );
+};
+
+Button.defaultProps = defaultProps;
+
+export { Button };

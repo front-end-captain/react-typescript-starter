@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import Button from "@/components/Button/index.tsx";
+import { Button } from "@/components/Button/index.tsx";
 
 interface ButtonCounterState {
   readonly clickCount: number;

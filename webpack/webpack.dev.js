@@ -3,6 +3,7 @@ const webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const tsImportPluginFactory = require("ts-import-plugin");
+const createStyledComponentsTransformer = require("typescript-plugin-styled-components").default;
 
 const { BUILD_PATH, ASSETS_PATH } = require("./constant.js");
 
@@ -29,6 +30,10 @@ module.exports = {
                 libraryName: "antd",
                 libraryDirectory: "es",
                 style: (name) => `${name}/style/css.js`,
+              }),
+              createStyledComponentsTransformer({
+                displayName: true,
+                minify: false,
               }),
             ],
           }),

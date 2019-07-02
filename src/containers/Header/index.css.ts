@@ -16,8 +16,8 @@ const HeaderWrapper = styled.nav`
 
     h1 {
       color: #fff;
-      font-family: "FREESCPT",serif;
-      font-size: 36px;
+      font-family: serif;
+      font-size: 24px;
       flex: 1 1;
     }
   }

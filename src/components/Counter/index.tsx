@@ -1,6 +1,6 @@
 import React from "react";
 
-import { counterStore } from "./modal";
+import { counterStore } from "@/modal/counter";
 
 const Counter = () => {
   const count = counterStore.useStore((S) => S.count);

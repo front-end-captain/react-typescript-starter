@@ -1,9 +1,9 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, ReactElement } from "react";
 import { Router } from "@reach/router";
 
 import { enhanceRoute, Component } from "./config";
 
-const createRouteTable: (routes: enhanceRoute[]) => JSX.Element[] = function(routes) {
+const createRouteTable: (routes: enhanceRoute[]) => ReactElement[] = function(routes) {
   return routes.map((route) => {
     const { component: Component, path, children } = route;
     if (Array.isArray(children) && children.length > 0) {

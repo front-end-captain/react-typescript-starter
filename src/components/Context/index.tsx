@@ -3,8 +3,8 @@ import React, { ChangeEvent, createContext, FunctionComponent, useState } from "
 type DefaultValue = {
   name: string,
   password: string,
-  setPassword: (password: string) => void;
-  setName: (name: string) => void;
+  setPassword: (password: string) => void,
+  setName: (name: string) => void,
 };
 
 const defaultValue: DefaultValue = {
@@ -26,7 +26,11 @@ const useUser = (defaultValue: DefaultValue) => {
 const Provider: FunctionComponent = ({ children }) => {
   const { name, password, setName, setPassword } = useUser(defaultValue);
 
-  return <UserProvider value={{ name, password, setName: setName, setPassword: setPassword }}>{children}</UserProvider>;
+  return (
+    <UserProvider value={{ name, password, setName, setPassword }}>
+      {children}
+    </UserProvider>
+  );
 };
 
 interface UserFormProps {

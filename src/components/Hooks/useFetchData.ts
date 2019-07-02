@@ -17,7 +17,7 @@ const requestError: RequestError = {
  *
  * @param url request url
  * @param initValue if initValue changed, the request will send again
- * @param options request config data
+ * @param options request webpack data
  *
  * @returns a object contains response's data, request loading and request error
  */

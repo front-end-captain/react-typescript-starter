@@ -10,7 +10,7 @@ const usePosition = () => {
   });
 
   return coords;
-}
+};
 
 const Position: FunctionComponent = () => {
   const [x, y] = usePosition();
