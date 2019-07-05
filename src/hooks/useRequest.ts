@@ -1,95 +1,124 @@
-import { useReducer, useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
+import { AxiosPromise, AxiosResponse } from "axios";
 
-export type Action = {
-  type: string;
-  [extraProp: string]: any;
-};
+import { ResponseData } from "@/types/response";
 
-export type FetchCallback = (params: any) => Promise<any>;
+export type FetchCallback<T> = (params: any) => AxiosPromise<ResponseData<T>>;
+type Callback = () => void;
 
-export interface RequestDataState {
-  loading: null | boolean;
-  data: {};
-  error: {} | null;
-};
+type Fetching = undefined | boolean;
+type RequestError = { message?: string; [key: string]: any } | null;
+type Params = Partial<{
+  [key: string]: any;
+}>;
 
+const REQUEST_SUCCESS_CODE = 1;
 
-const FETCHING = "fetching";
-const SAVE_DATA = "save_data";
-const SAVE_ERROR = "save_error";
+/**
+ * invoke http request function when component mounted or other occasion.
+ * for example, when component mounted, when page changed, when searchCondition changed.
+ *
+ *
+ * @param fetchCallback
+ * @param params
+ * @param requestWhenMount
+ */
+const useRequest = <T>(fetchCallback: FetchCallback<T>, params: Params = {}, callback?: Callback) => {
+  const { doSendRequest, ...reset } = useTriggerRequest<T>(fetchCallback, callback);
 
-const fetchDataState: RequestDataState = {
-  loading: null,
-  data: {},
-  error: null,
-};
+  useEffect(() => {
+    doSendRequest(params);
+  }, [...Object.values(params)]);
 
-const fetchDataReducer = (state = fetchDataState, action: Action) => {
-  switch (action.type) {
-    case FETCHING:
-      return {
-        ...state,
-        loading: action.loading,
-      };
-    case SAVE_DATA:
-      return {
-        ...state,
-        data: action.data,
-      };
-    case SAVE_ERROR:
-      return {
-        ...state,
-        error: action.error,
-      };
-    default:
-      return state;
-  }
+  return { doSendRequest, ...reset };
 };
 
 /**
+ * only invoke http request function when manual trigger request callback.
+ * will not trigger after component mounted.
+ * for example, user clicked the search button, countdown time out.
  *
- * @param {Function} fetchCallback request function @see service/*.js
- * @param {object} params request params
- * @param {boolean} requestFirst send request when component mount
+ * @param fetchCallback
+ * @param callback
+ * @type T ResponseData.data @see @/types/response `ResponseData.data`
  */
-const useRequest = (fetchCallback: FetchCallback, params = {}, requestFirst = true) => {
-  const [state, dispatch] = useReducer(fetchDataReducer, fetchDataState);
+const useTriggerRequest = <T>(fetchCallback: FetchCallback<T>, callback?: Callback) => {
+  const [fetching, setFetching] = useState<Fetching>(undefined);
+  const [data, setData] = useState<T>({} as T);
+  const [error, setError] = useState<RequestError>(null);
+  const [success, setSuccess] = useState<boolean>(false);
 
-  const sendRequest = async () => {
+  const [responseData, setResponseData] = useState<ResponseData<T>>({} as ResponseData<T>);
+
+  const [reload, setReload] = useState<boolean>(false);
+  const prevReloadRef = useRef(reload);
+
+  const sendRequest = async (args: Params = {}) => {
     // clear error info before each request
-    dispatch({ type: SAVE_ERROR, error: null });
-    dispatch({ type: FETCHING, loading: true });
+    setError(null);
+    setFetching(true);
 
-    let response = null;
+    let response: AxiosResponse<ResponseData<T>>;
 
     try {
-      response = await fetchCallback(params);
+      response = await fetchCallback({ ...args });
 
-      if (response.status === 200 && response.data.code === 1) {
-        dispatch({ type: SAVE_DATA, data: response.data.data });
+      setResponseData(response.data);
+
+      if (response.status === 200 && response.data.code === REQUEST_SUCCESS_CODE) {
+        setData(response.data.data);
+
+        setSuccess(true);
+
+        callback && callback();
       } else {
         throw new Error(
           `the data fetched failure, the reason maybe ${response.data.message || "unknown"}`,
         );
       }
     } catch (error) {
-      dispatch({ type: SAVE_ERROR, error });
+      setError(error);
+      setSuccess(false);
     } finally {
-      dispatch({ type: FETCHING, loading: false });
+      setFetching(false);
     }
   };
 
   useEffect(() => {
-    if (requestFirst) {
+    if (reload !== prevReloadRef.current) {
       sendRequest();
     }
-  }, [...Object.values(params)]);
 
-  const doRequest = () => {
-    sendRequest();
+    prevReloadRef.current = reload;
+  }, [reload]);
+
+  const doSendRequest = (args: Params = {}) => {
+    sendRequest(args);
   };
 
-  return { ...state, doRequest };
+  const reSendRequest = () => {
+    setReload(!reload);
+  };
+
+  const clearResponseData = () => {
+    setResponseData({} as ResponseData<T>);
+  };
+
+  const clearData = () => {
+    setData({} as T);
+  };
+
+  return {
+    fetching,
+    data,
+    error,
+    doSendRequest,
+    responseData,
+    reSendRequest,
+    success,
+    clearResponseData,
+    clearData
+  };
 };
 
-export { useRequest };
+export { useRequest, useTriggerRequest };

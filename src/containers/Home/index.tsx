@@ -4,11 +4,11 @@ import { RouteComponentProps } from "react-router-dom";
 import { Modal } from "antd";
 
 import Collapse from "@/components/Hooks/collapse";
-import { SquaresToDraw } from "@/components/SquaresToDraw/index.tsx";
-import { Position } from "@/components/Position/index.tsx";
-import { ButtonCounter } from "@/components/ButtonCounter/index.tsx";
-import { ContextDemo } from "@/components/Context/index.tsx";
-import { Counter } from "@/components/Counter/index.tsx";
+import { SquaresToDraw } from "@/components/SquaresToDraw";
+import { Position } from "@/components/Position";
+import { ButtonCounter } from "@/components/ButtonCounter";
+import { ContextDemo } from "@/components/Context";
+import { Counter } from "@/components/Counter";
 import { AnotherCounter } from "@/components/Counter/anotherCounter";
 import { counterStore } from "@/modal/counter";
 

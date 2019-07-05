@@ -100,7 +100,16 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".json", ".png"],
     alias: {
-      "@": path.resolve(__dirname, "./../src"),
+      "@/containers": path.resolve(__dirname, "./../src/containers"),
+      "@/components": path.resolve(__dirname, "./../src/components"),
+      "@/hooks": path.resolve(__dirname, "./../src/hooks"),
+      "@/router": path.resolve(__dirname, "./../src/router"),
+      "@/style": path.resolve(__dirname, "./../src/style"),
+      "@/utils": path.resolve(__dirname, "./../src/utils"),
+      "@/modal": path.resolve(__dirname, "./../src/modal"),
+      "@/types": path.resolve(__dirname, "./../src/types"),
+      "@/lib": path.resolve(__dirname, "./../src/lib"),
+      "@/api": path.resolve(__dirname, "./../src/service/api"),
     },
   },
   plugins: [

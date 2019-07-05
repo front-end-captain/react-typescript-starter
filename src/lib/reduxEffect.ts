@@ -1,4 +1,3 @@
-
 // @ts-ignore
 import { Dispatch, ReducersMapObject, MiddlewareAPI, AnyAction, Store } from "redux";
 import { State, Modal, InitState, InitReducers } from "./types";
@@ -7,12 +6,13 @@ import { State, Modal, InitState, InitReducers } from "./types";
  *
  * @param modals
  */
-const reduxReducers = function reduxReducers(modals: Modal<InitState, InitReducers>[]): ReducersMapObject {
+const reduxReducers = function reduxReducers(
+  modals: Modal<InitState, InitReducers>[],
+): ReducersMapObject {
   const reducers: ReducersMapObject = {};
 
   modals.forEach((modal) => {
     reducers[modal.namespace] = (state: State<InitState>, action: AnyAction) => {
-
       // dispatch({ type: "home/fetch" }) => key: home, type: fetch
       const [key, type] = action.type.split("/");
 
@@ -33,14 +33,13 @@ const reduxReducers = function reduxReducers(modals: Modal<InitState, InitReduce
   return reducers;
 };
 
-
 /**
  *
  * @param modals
  */
-const reduxEffectsWithLoading = (modals: Modal<InitState, InitReducers>[]) => (store: MiddlewareAPI) => (
-  next: Dispatch,
-) => async (action: AnyAction) => {
+const reduxEffectsWithLoading = (modals: Modal<InitState, InitReducers>[]) => (
+  store: MiddlewareAPI,
+) => (next: Dispatch) => async (action: AnyAction) => {
   next(action);
   const [key, type] = action.type.split("/");
 
@@ -54,7 +53,7 @@ const reduxEffectsWithLoading = (modals: Modal<InitState, InitReducers>[]) => (s
   if (currentModal && currentModal.effects && typeof currentModal.effects[type] === "function") {
     await store.dispatch({ type: `loading/loading`, payload: { name: key, type, loading: true } });
     // @ts-ignore
-    await currentModal.effects[type](store as Store, action);
+    await currentModal.effects[type](store, action);
     await store.dispatch({ type: `loading/loading`, payload: { name: key, type, loading: false } });
   }
 };

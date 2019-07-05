@@ -3,7 +3,7 @@
     /* Basic Options */
     "target": "ES5",
     /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017','ES2018' or 'ESNEXT'. */
-    "module": "esnext",
+    "module": "ESNext",
     /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */
     "lib": [
       "dom",
@@ -51,7 +51,7 @@
     // "noFallthroughCasesInSwitch": true,    /* Report errors for fallthrough cases in switch statement. */
 
     /* Module Resolution Options */
-    // "moduleResolution": "node",            /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */
+    "moduleResolution": "node",            /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */
     "baseUrl": "./",
     /* Base directory to resolve non-absolute module names. */
     "paths": {
@@ -59,7 +59,13 @@
       "@/containers/*": ["src/containers/*"],
       "@/components/*": ["src/components/*"],
       "@/hooks/*": ["src/hooks/*"],
-      "@/*": ["./*"],
+      "@/router/*": ["src/router/*"],
+      "@/style/*": ["src/style/*"],
+      "@/utils/*": ["src/utils/*"],
+      "@/modal/*": ["src/modal/*"],
+      "@/types/*": ["src/types/*"],
+      "@/lib/*": ["src/lib/*"],
+      "@/api/*": ["src/service/api/*"],
     },
     /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
     // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */

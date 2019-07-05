@@ -1,4 +1,4 @@
-import { Store } from "@/lib/store/index.ts";
+import { Store } from "@/lib/store";
 
 const counterStore = new Store({
   name: "counter",

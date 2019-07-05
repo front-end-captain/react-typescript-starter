@@ -1,4 +1,3 @@
-// @ts-ignore
 import { Store } from "redux";
 
 export type Action<T = string> = {

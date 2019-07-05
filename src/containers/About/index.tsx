@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Link } from "@reach/router";
 
-
 interface AboutProps {
   title: string;
   number: number;
@@ -24,5 +23,4 @@ const About: React.FunctionComponent<AboutProps> = (props) => {
   );
 };
 
-export { About }
-  ;
+export { About };

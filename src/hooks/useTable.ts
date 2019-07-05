@@ -1,17 +1,29 @@
 import { useState, useEffect, useRef } from "react";
 
 import { useRequest, FetchCallback } from "./useRequest";
+import { ResponsePagination } from "@/types/response";
 
-const useTable = (fetchCallback: FetchCallback, searchConditionList = {}) => {
+type Condition = Partial<{
+  [key: string]: any;
+}>;
+
+interface TableData {
+  pagination?: ResponsePagination;
+  list?: [];
+}
+
+const useTable = <T>(fetchCallback: FetchCallback<T>, searchConditions: Condition = {}) => {
   const defaultSize = 10;
   const defaultPage = 1;
-  const [currentPage, setCurrentPage] = useState(defaultPage);
-  const [pageSize, setPageSize] = useState(defaultSize);
-  const [condition, setCondition] = useState({ ...searchConditionList });
-  const [reload, setReload] = useState(false);
-  const prevReloadRef = useRef(reload);
 
-  const { loading, data, error, doRequest } = useRequest(fetchCallback, {
+  const [currentPage, setCurrentPage] = useState<number>(defaultPage);
+  const [pageSize, setPageSize] = useState<number>(defaultSize);
+  const [condition, setCondition] = useState<Condition>({ ...searchConditions });
+  const [reload, setReload] = useState<boolean>(false);
+
+  const prevReloadRef = useRef<boolean>(reload);
+
+  const { fetching, data, error, doSendRequest } = useRequest<T>(fetchCallback, {
     page: currentPage,
     size: pageSize,
     ...condition,
@@ -19,13 +31,13 @@ const useTable = (fetchCallback: FetchCallback, searchConditionList = {}) => {
 
   useEffect(() => {
     if (reload && !prevReloadRef.current) {
-      doRequest();
+      doSendRequest();
     }
   }, [reload]);
 
-  const handlePaginationChange = (current: number, pageSize: number) => {
+  const handlePaginationChange = (current: number, pageSize: number | undefined) => {
     setCurrentPage(current);
-    setPageSize(pageSize);
+    setPageSize(pageSize || defaultSize);
   };
 
   const handleSearch = (condition = {}) => {
@@ -41,11 +53,11 @@ const useTable = (fetchCallback: FetchCallback, searchConditionList = {}) => {
     setPageSize(defaultSize);
   };
 
-  const dataSource = data.list ? data.list : [];
-  const pagination = data.pagination ? data.pagination : {};
+  const dataSource = (data as TableData).list || [];
+  const pagination = (data as TableData).pagination || { total: 0 };
 
   return {
-    loading,
+    loading: fetching,
     error,
     data: dataSource,
     pagination,

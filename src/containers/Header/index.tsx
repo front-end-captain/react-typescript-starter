@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 
 import { routeTable } from "@/router/config";
-import { Navigation } from "@/components/Navigation/index.tsx";
+import { Navigation } from "@/components/Navigation";
 
 import { HeaderWrapper } from "./index.css";
 

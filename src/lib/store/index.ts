@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 
-// @ts-ignore
 import { produce } from "immer";
 import { Modal, Reducers, Effects, Updater, Update, Selector, ActionSelector } from "./types";
 import { getActionName } from "./helps";

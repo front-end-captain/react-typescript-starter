@@ -7,3 +7,7 @@ arrowParens: "always"
 jsxBracketSameLine: false
 endOfLine: "lf"
 proseWrap: "always"
+overrides:
+  - files: "*.ts,*.tsx"
+    options:
+      parser: "typescript"

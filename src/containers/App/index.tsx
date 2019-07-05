@@ -1,11 +1,10 @@
 import React, { FunctionComponent } from "react";
-// @ts-ignore
 import { hot, setConfig } from "react-hot-loader";
 
-import { Header } from "@/containers/Header/index.tsx";
-import { Footer } from "@/components/Footer/index.tsx";
-import { NotFound } from "@/components/NotFound/index.tsx";
-import { AppRouter } from "@/router/index.ts";
+import { Header } from "@/containers/Header";
+import { Footer } from "@/components/Footer";
+import { NotFound } from "@/components/NotFound";
+import { AppRouter } from "@/router/index";
 import { routeTable } from "@/router/config";
 
 import { BasicContainer } from "./index.css";

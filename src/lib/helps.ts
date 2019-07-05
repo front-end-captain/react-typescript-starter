@@ -1,6 +1,5 @@
 import { ComponentType } from "react";
 
-declare type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
 
 const sleep = function sleep(time: number = 1000): Promise<any> {
   return new Promise((resolve) => {

@@ -1,11 +1,12 @@
 import { ComponentType } from "react";
 import { RouteComponentProps } from "@reach/router";
 
-import { Home } from "@/containers/Home/index";
-import { About } from "@/containers/About/index.tsx";
-import { Toggle } from "@/components/Toggle/index.tsx";
-import { SquaresToDraw } from "@/components/SquaresToDraw/index.tsx";
-import { Menu } from "@/components/Menu/index.tsx";
+import { Home } from "@/containers/Home";
+import { About } from "@/containers/About";
+import { Toggle } from "@/components/Toggle";
+import { SquaresToDraw } from "@/components/SquaresToDraw";
+import { Menu } from "@/components/Menu";
+import { ExamPapers } from "@/containers/Paper";
 
 type Component = ComponentType<RouteComponentProps<any>> | ComponentType<any>;
 
@@ -46,6 +47,11 @@ const routeTable: enhanceRoute[] = [
         ],
       },
     ],
+  },
+  {
+    name: "paper",
+    path: "paper",
+    component: ExamPapers,
   },
 ];
 
