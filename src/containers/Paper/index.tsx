@@ -42,8 +42,6 @@ const ExamPapersComponent: FunctionComponent<ExamPapersProps> = (props) => {
     responseData: checkPaperEditableResult,
   } = useTriggerRequest<CheckPaperCanEditResult>(checkPaperCanEdit);
 
-  console.log(delPaperResult);
-
   // 删除试卷处理
   useEffect(() => {
     if (delPaperResult.code === -2 && !deletingPaper) {

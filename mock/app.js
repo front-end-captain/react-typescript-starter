@@ -9,7 +9,7 @@ const app = express();
 
 app.all("*", function(_, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type,Authorization");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type,Authorization,key,timestamp,token");
   res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
   res.header("X-Powered-By", " 3.2.1");
   res.header("Content-Type", "application/json;charset=utf-8");
@@ -32,6 +32,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use("/papers", require("./controller/paper"));
+app.use("/public", require("./controller/public"));
 
 
 app.use((error, _, response) => {

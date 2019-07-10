@@ -26,3 +26,10 @@ export interface ResponsePagination {
   pageSize: number;
   total: number;
 }
+
+
+export interface ServerTimeData {
+  timestamp: number;
+  date: string;
+  dateString: string;
+}

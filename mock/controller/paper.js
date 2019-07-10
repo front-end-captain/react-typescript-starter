@@ -10,9 +10,9 @@ let COURSE_LIST = require("./../db/courseList.js");
  * @param {string} name? paper name
  * @param {boolean} all? 获取所有
  */
-Router.get("/", (request, response) => {
+Router.post("/list", (request, response) => {
   let {
-    query: { page = 1, size = 10, name = "", all = 0 },
+    body: { page = 1, size = 10, name = "", all = 0 },
   } = request;
 
   page = Number(page);

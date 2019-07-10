@@ -1,3 +1,6 @@
+import { stringify } from "qs";
+import md5 from "blueimp-md5";
+
 const extractSearch = (input: string) => {
   const queryStart = input.indexOf("?");
   if (queryStart === -1) {
@@ -43,4 +46,38 @@ export const serialize = (params = {}) => {
   const searchParams = new URLSearchParams(params);
 
   return searchParams.toString();
+};
+
+
+export const transformRequestData = (requestData: { [key: string]: any }) => {
+  const transformedRequestData: { [key: string]: any } = {};
+
+  Object.keys(requestData).forEach((key) => {
+    if (typeof requestData[key] === "object") {
+      transformedRequestData[key] = JSON.stringify(requestData[key]);
+    } else {
+      transformedRequestData[key] = requestData[key];
+    }
+  });
+
+  return transformedRequestData;
+};
+
+export const createSignatureParams = (params: { [key: string]: any }, secretKey: string) => {
+  const stringifiedRequestData = stringify(params, {
+    delimiter: "",
+    sort: (a, b) => a.localeCompare(b),
+  });
+
+  // console.log(
+  //   "%cStringifiedRequestData",
+  //   "color: orange; font-size: 18px",
+  //   stringifiedRequestData,
+  // );
+
+  const signatureParams = md5(`${stringifiedRequestData}${secretKey}`);
+
+  // console.log("%cSignatureParams", "color: red; font-size: 18px", signatureParams);
+
+  return signatureParams;
 };

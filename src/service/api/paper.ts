@@ -1,13 +1,18 @@
-import { serialize } from "@/utils/utils";
 import { request } from "../request";
 
 import { ResponseData } from "@/types/response";
 
 import { getPaperListQuery, PaperListData, CheckPaperCanEditResult } from "@/types/paper";
 
+const testData = {
+  title: "viking",
+  sex: 1,
+  list: [{ name: "tom", age: 1 }, { name: "tom", age: 1 }],
+  city: { key: 1, value: "北京", arr: [1, { name: "hello" }] }
+};
 
 export const getPapers = (params: getPaperListQuery) => {
-  return request.get<ResponseData<PaperListData>>(`/papers?${serialize(params)}`);
+  return request.post<ResponseData<PaperListData>>("/papers/list", { ...params, ...testData });
 };
 
 
