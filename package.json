@@ -4,7 +4,9 @@
   "description": "a react application template based on typescript",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --config webpack/webpack.dev.js"
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --config webpack/webpack.dev.js",
+    "build": "cross-env NODE_ENV=production webpack --config webpack/webpack.prod.js",
+    "json": "typescript-json-schema './src/types/paper.d.ts' '*' -o ./src/types/paper.json --id=api --required --ignoreErrors --strictNullChecks"
   },
   "repository": {
     "type": "git",
@@ -33,9 +35,12 @@
     "@types/react-router-dom": "^4.3.1",
     "@types/redux-thunk": "^2.1.0",
     "@types/styled-components": "^4.1.13",
+    "clean-webpack-plugin": "^2.0.1",
     "cross-env": "^5.2.0",
     "css-loader": "^2.1.1",
     "html-webpack-plugin": "^3.2.0",
+    "json-stable-stringify": "^1.0.1",
+    "jsonschema": "^1.2.4",
     "mini-css-extract-plugin": "^0.6.0",
     "prettier": "^1.18.2",
     "redux-devtools-extension": "^2.13.8",
@@ -50,7 +55,8 @@
     "ts-loader": "^6.0.0",
     "tslint": "^5.14.0",
     "tslint-react": "^3.6.0",
-    "typescript": "^3.5.2",
+    "typescript": "^3.4.3",
+    "typescript-json-schema": "^0.37.0",
     "typescript-plugin-styled-components": "^1.4.3",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",

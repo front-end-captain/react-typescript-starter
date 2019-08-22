@@ -33,6 +33,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use("/papers", require("./controller/paper"));
 app.use("/public", require("./controller/public"));
+app.use("/class", require("./controller/classOrder"));
 
 
 app.use((error, _, response) => {

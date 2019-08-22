@@ -1,0 +1,107 @@
+{
+  "$id": "api",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "CheckPaperCanEditResult": {
+      "type": "number"
+    },
+    "DelPaperResult": {
+      "type": "number"
+    },
+    "PaperList": {
+      "items": {
+        "$ref": "api#/definitions/PaperListItem"
+      },
+      "type": "array"
+    },
+    "PaperListData": {
+      "properties": {
+        "list": {
+          "items": {
+            "$ref": "api#/definitions/PaperListItem"
+          },
+          "type": "array"
+        },
+        "pagination": {
+          "$ref": "api#/definitions/ResponsePagination"
+        }
+      },
+      "required": [
+        "list",
+        "pagination"
+      ],
+      "type": "object"
+    },
+    "PaperListItem": {
+      "properties": {
+        "createTime": {
+          "type": "number"
+        },
+        "creator": {
+          "type": "string"
+        },
+        "examTime": {
+          "type": "number"
+        },
+        "id": {
+          "type": "number"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "createTime",
+        "creator",
+        "examTime",
+        "id",
+        "name"
+      ],
+      "type": "object"
+    },
+    "ResponsePagination": {
+      "properties": {
+        "page": {
+          "type": "number"
+        },
+        "pageSize": {
+          "type": "number"
+        },
+        "total": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "page",
+        "pageSize",
+        "total"
+      ],
+      "type": "object"
+    },
+    "getPaperListQuery": {
+      "properties": {
+        "all": {
+          "enum": [
+            0,
+            1
+          ],
+          "type": "number"
+        },
+        "name": {
+          "type": "string"
+        },
+        "page": {
+          "type": "number"
+        },
+        "size": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "all"
+      ],
+      "type": "object"
+    }
+  }
+}
+
