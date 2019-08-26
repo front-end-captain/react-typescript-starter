@@ -27,14 +27,15 @@ const validateResponseData = (response: AxiosResponse<ResponseData>, type: strin
 };
 
 export const getPapers = (params: getPaperListQuery) => {
-  return request.post<ResponseData<PaperListData>>("/papers/list", { ...params }).then((response) => validateResponseData(response, "PaperListData"));
+  return request
+    .post<ResponseData<PaperListData>>("/papers/list", { ...params })
+    .then((response) => validateResponseData(response, "PaperListData"));
 };
 
-
-export const deletePaper = ({ paperId }: { paperId: number} ) => {
+export const deletePaper = ({ paperId }: { paperId: number }) => {
   return request.delete(`/papers/${paperId}`);
 };
 
 export const checkPaperCanEdit = (paperId: number) => {
-  return request.get<ResponseData<CheckPaperCanEditResult>>(`/papers/check/editable/${paperId}`)
+  return request.get<ResponseData<CheckPaperCanEditResult>>(`/papers/check/editable/${paperId}`);
 };
