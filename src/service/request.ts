@@ -36,7 +36,7 @@ request.interceptors.request.use(
           config.headers.timestamp = res.timestamp;
           config.headers.token = md5(`${REQUEST_KEY}&${REQUEST_SECRET}&${res.timestamp}`);
 
-          console.log("%cRequestConfig", "color: red; font-size: 16px", config);
+          // console.log("%cRequestConfig", "color: red; font-size: 16px", config);
 
           resolve(config);
         });
@@ -51,6 +51,7 @@ request.interceptors.request.use(
 
 request.interceptors.response.use(
   (response: AxiosResponse) => {
+    // console.log("%cResponse", "color: red; font-size: 16px", response);
     return response;
   },
   (error: AxiosError) => {

@@ -6,6 +6,9 @@ const glob = require("glob");
 const TJS = require("typescript-json-schema");
 const REGEX_TSCONFIG_NAME = /^.*\.json$/;
 
+// out file
+// filePattern
+
 // optionally pass argument to schema generator
 const settings = {
   required: true,
