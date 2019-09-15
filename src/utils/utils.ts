@@ -1,7 +1,5 @@
 import { stringify } from "qs";
 import md5 from "blueimp-md5";
-import { AxiosResponse } from "axios";
-import { ResponseData } from "@/types/response";
 
 const extractSearch = (input: string) => {
   const queryStart = input.indexOf("?");

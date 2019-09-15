@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 
 import { produce } from "immer";
-import { Modal, Reducers, Effects, Updater, Update, Selector, ActionSelector } from "./types";
+import { Modal, Reducers, Effects, Updater, Update, Selector, ActionSelector, StoreConfig } from "./types";
 import { getActionName } from "./helps";
 
-const debug: boolean = process.env.NODE_ENV === "development";
+const dev: boolean = process.env.NODE_ENV === "development";
 
 class Store<S, R extends Reducers<S>, E extends Effects> {
   private store: S;
@@ -13,11 +13,17 @@ class Store<S, R extends Reducers<S>, E extends Effects> {
 
   private modal: Modal<S, R, E>;
 
+  private static config: StoreConfig = { debug: dev };
+
+  static setConfig(config: StoreConfig) {
+    Store.config.debug = config.debug || dev;
+  }
+
   constructor(modal: Modal<S, R, E>) {
     this.store = modal.state;
     this.modal = modal;
 
-    this.checkModal(modal);
+    dev && this.checkModal(modal);
   }
 
   private checkModal(modal: Modal<S, R, E>): void {
@@ -45,10 +51,9 @@ class Store<S, R extends Reducers<S>, E extends Effects> {
   public useStore<P>(selector: Selector<S, P>): P {
     const [state, setState] = useState(this.store);
 
-    // @ts-ignore
     const update: Update<S> = (set: any, nextStore: S) => {
       if (!nextStore) {
-        return null;
+        return;
       }
 
       this.store = nextStore;
@@ -87,7 +92,7 @@ class Store<S, R extends Reducers<S>, E extends Effects> {
       this.modal.reducers[actionName](draftState, payload);
     });
 
-    if (debug) {
+    if (Store.config.debug) {
       console.group(`Store: ${this.modal.name || "unknown"}`);
       console.log("%cPrev", "color: orange; font-size: 18px", this.store);
       console.log("%cNext", "color: red; font-size: 18px", nextStore);

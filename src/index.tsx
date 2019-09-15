@@ -3,7 +3,6 @@ import * as ReactDOM from "react-dom";
 
 import App from "@/containers/App";
 
-ReactDOM.render(
-  <App />,
-  document.getElementById("root") as HTMLElement,
-);
+const ROOT_NODE = document.getElementById("root");
+
+ReactDOM.render(<App />, ROOT_NODE);
