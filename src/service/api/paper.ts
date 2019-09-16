@@ -1,6 +1,5 @@
 import { request } from "../request";
 
-import { ResponseData } from "@/types/response";
 import schema from "@/types/types.json";
 
 import { Validator } from "jsonschema";
@@ -11,7 +10,7 @@ import { AxiosResponse } from "axios";
 const v = new Validator();
 v.addSchema(schema, "/api");
 
-const validateResponseData = (response: AxiosResponse<ResponseData>, type: string) => {
+const validateResponseData = (response: AxiosResponse<ResponseSharp.ResponseData>, type: string) => {
   const data = response.data.data;
   const result = v.validate(data, {
     $ref: `api#/definitions/${type}`,
@@ -36,18 +35,18 @@ const requestUrlAndResponseMap: { [key: string]: { url: string, responseTypeName
 
 export const getPapers = (params: getPaperListQuery) => {
   return request
-    .post<ResponseData<PaperListData>>(requestUrlAndResponseMap[getPapers.name].url, { ...params })
+    .post<ResponseSharp.ResponseData<PaperListData>>(requestUrlAndResponseMap[getPapers.name].url, { ...params })
     .then((response) => validateResponseData(response, requestUrlAndResponseMap[getPapers.name].responseTypeName));
 };
 
 export const deletePaper = ({ paperId }: { paperId: number }) => {
   return request
-    .post<ResponseData<DelPaperResult>>(`/papers/${paperId}`)
+    .post<ResponseSharp.ResponseData<DelPaperResult>>(`/papers/${paperId}`)
     .then((response) => validateResponseData(response, "DelPaperResult"));
 };
 
 export const checkPaperCanEdit = (paperId: number) => {
   return request
-    .post<ResponseData<CheckPaperCanEditResult>>(`/papers/check/editable/${paperId}`)
+    .post<ResponseSharp.ResponseData<CheckPaperCanEditResult>>(`/papers/check/editable/${paperId}`)
     .then((response) => validateResponseData(response, "CheckPaperCanEditResult"));
 };

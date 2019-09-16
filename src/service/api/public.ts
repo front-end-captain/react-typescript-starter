@@ -1,14 +1,13 @@
-import { ResponseData, ServerTimeData } from "@/types/response";
 import { domain } from "../domain";
 
-export const getServerTime: () => Promise<ServerTimeData> = function() {
-  return new Promise<ServerTimeData>((resolve, reject) => {
+export const getServerTime: () => Promise<ResponseSharp.ServerTimeData> = function() {
+  return new Promise<ResponseSharp.ServerTimeData>((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.open("post", `${domain}/public/time`);
 
     xhr.onreadystatechange = () => {
       if (xhr.readyState === 4 && xhr.status === 200) {
-        const response: ResponseData<ServerTimeData> = JSON.parse(xhr.response);
+        const response: ResponseSharp.ResponseData<ResponseSharp.ServerTimeData> = JSON.parse(xhr.response);
 
         if (response.code === 1) {
           resolve(response.data);

@@ -6,8 +6,12 @@ const counterStore = new Store({
     count: 10,
     times: 100,
     visible: false,
+    list: [],
   },
   reducers: {
+    init: (state, payload) => {
+      state.list = payload;
+    },
     increment: (state, payload) => {
       if (payload) {
         state.count = state.count + payload;

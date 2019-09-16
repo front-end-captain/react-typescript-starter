@@ -1,5 +1,3 @@
-import { ResponsePagination } from "./response";
-
 export interface getPaperListQuery {
   page?: number;
   size?: number;
@@ -18,7 +16,7 @@ export interface PaperListItem {
 
 export type PaperList = PaperListItem[];
 
-export type PaperListData = { pagination: ResponsePagination, list: PaperList };
+export type PaperListData = { pagination: ResponseSharp.ResponsePagination, list: PaperList };
 
 export type DelPaperResult = number;
 
